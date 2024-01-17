@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Оновити витрати</title>
+</head>
+<body>
+    <form action="/api/expenses/1" method="put">
+        <input type="number" name="foodExpense" placeholder="Витрати на харчування" th:value="${expenses.foodExpense}">
+        <input type="number" name="utilityExpense" placeholder="Витрати на комунальні послуги" th:value="${expenses.utilityExpense}">
+        <input type="number" name="otherExpense" placeholder="Інші витрати" th:value="${expenses.otherExpense}">
+        <input type="submit" value="Оновити">
+    </form>
+</body>
+</html>
