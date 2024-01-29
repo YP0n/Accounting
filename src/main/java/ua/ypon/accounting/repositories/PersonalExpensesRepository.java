@@ -12,7 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface PersonalExpensesRepository extends JpaRepository<PersonalExpenses, Long> {
-    List<PersonalExpenses> findPersonalExpensesByDateExpensePersonal(LocalDate dateExpensePersonal);
-    //Double getPersonalExpensesByDateExpensePersonal(LocalDate startDate, LocalDate endDate);
-    Double getAverageExpensesByCategory(String category);
+    List<PersonalExpenses> findAllByDateExpensePersonalBetween(LocalDate startDate, LocalDate endDate);
 }

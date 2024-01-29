@@ -1,6 +1,7 @@
 package ua.ypon.accounting.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "Income_shop")
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class IncomeShop {
     @Id
@@ -30,4 +32,16 @@ public class IncomeShop {
 
     @Column(name = "date_income")
     private LocalDate dateIncome;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "income_type")
+    private IncomeType incomeType;
+
+    public double getAmount(IncomeType incomeType) {
+        return switch (incomeType) {
+            case CASH -> incomeCash;
+            case CASHLESS -> incomeCashless;
+            case OTHER -> incomeOther;
+        };
+    }
 }

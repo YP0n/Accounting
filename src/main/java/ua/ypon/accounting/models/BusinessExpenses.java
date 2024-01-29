@@ -1,6 +1,7 @@
 package ua.ypon.accounting.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +11,9 @@ import java.time.LocalDate;
  * @author ua.ypon 15.01.2024
  */
 @Entity
-@Table(name = "Business_expenses")
+@Table(name = "business_expenses")
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class BusinessExpenses {
     @Id
@@ -49,6 +51,25 @@ public class BusinessExpenses {
     @Column(name = "suppliers")
     private double suppliers;
 
-    @Column(name = "date_expenses_business")
+    @Column(name = "date_expense_business")
     private LocalDate dateExpensesBusiness;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "business_expenses_type")
+    private BusinessExpensesType businessExpensesType;
+
+    public double getAmount(BusinessExpensesType businessExpensesType) {
+        return switch (businessExpensesType) {
+            case FUEL -> fuel;
+            case MAINTENANCE -> maintenance;
+            case SALARYVALYA -> salaryValya;
+            case SALARYIRA -> salaryIra;
+            case UTILITYANDWATER -> utilityAndWater;
+            case RENT -> rent;
+            case TAXSINGLE -> taxSingle;
+            case TAXPENSION -> taxPension;
+            case OWNER -> owner;
+            case SUPPLIERS -> suppliers;
+        };
+    }
 }

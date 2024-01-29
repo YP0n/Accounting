@@ -3,6 +3,7 @@ package ua.ypon.accounting.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.ypon.accounting.models.ExpenseType;
 import ua.ypon.accounting.models.PersonalExpenses;
 import ua.ypon.accounting.repositories.PersonalExpensesRepository;
 
@@ -32,17 +33,6 @@ public class PersonalExpenseService {
         return personalExpensesRepository.findAll();
     }
 
-//    public Double getTotalExpensesByDateRange(LocalDate startDate, LocalDate endDate) {
-//        return personalExpensesRepository.getPersonalExpensesByDateExpensePersonal(startDate, endDate);
-//    }
-
-    public Double getAverageExpensesByCategory(String category) {
-        return personalExpensesRepository.getAverageExpensesByCategory(category);
-    }
-
-    public List<PersonalExpenses> findPersonalExpensesByDateExpensePersonal(LocalDate date) {
-        return personalExpensesRepository.findPersonalExpensesByDateExpensePersonal(date);
-    }
     @Transactional
     public PersonalExpenses save(PersonalExpenses personalExpenses) {
         try {
@@ -62,6 +52,31 @@ public class PersonalExpenseService {
     @Transactional
     public void delete(long id) {
         personalExpensesRepository.deleteById(id);
+    }
+
+    public double sumExpenseFood() {
+        // Отримати всі витрати на їжу
+        List<PersonalExpenses> expensesList = personalExpensesRepository.findAll();
+
+        double sum = 0.0;
+        if (expensesList.isEmpty()){
+        return 0.0;
+    }
+        for (PersonalExpenses expenses : expensesList) {
+            // Підсумувати лише витрати на їжу
+            sum += expenses.getFoodExpense();
+        }
+        return sum;
+    }
+
+    public double getSumExpenses(LocalDate startDate, LocalDate endDate, ExpenseType expenseType) {
+        List<PersonalExpenses> expenses = personalExpensesRepository.findAllByDateExpensePersonalBetween(startDate, endDate);
+
+        double sum = 0.0;
+        for(PersonalExpenses expense : expenses) {
+                sum += expense.getAmount(expenseType);
+        }
+        return sum;
     }
 
 }
