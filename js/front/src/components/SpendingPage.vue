@@ -104,7 +104,7 @@ export default {
 
     sendSpending(e) {
       e.preventDefault();
-      axios.post('/personal_expenses', {
+      axios.post('/personal_expenses/api/expenses', {
         foodExpense: this.foodExpense,
         utilityExpense: this.utilityExpense,
         otherExpense: this.otherExpense,

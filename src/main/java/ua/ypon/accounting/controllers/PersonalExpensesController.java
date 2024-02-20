@@ -40,16 +40,12 @@ public class PersonalExpensesController {
         log.info("PersonalExpenses.getAllExpenses()");
         return service.findAll();
     }
-    @PostMapping()
+    @PostMapping("/api/expenses")
     @ResponseBody
-    public ResponseEntity<?> addExpense(@ModelAttribute("personalExpenses")
-                                            PersonalExpenses personalExpenses) {
+    public ResponseEntity<?> addExpense(@RequestBody PersonalExpenses personalExpenses) {
         log.info("PersonaExpenses.addExpense()");
         service.save(personalExpenses);
-        String redirectUrl = "/personal_expenses/show";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create(redirectUrl));
-        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/show")
