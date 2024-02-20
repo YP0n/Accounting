@@ -3,6 +3,7 @@ package ua.ypon.accounting.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,8 @@ import ua.ypon.accounting.services.PersonalExpenseService;
 
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 /**
@@ -44,8 +47,18 @@ public class PersonalExpensesController {
     @ResponseBody
     public ResponseEntity<?> addExpense(@RequestBody PersonalExpenses personalExpenses) {
         log.info("PersonaExpenses.addExpense()");
+        // Приведення типу поля дати до LocalDate з вказанням формату
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String dateString = String.valueOf(personalExpenses.getDateExpensePersonal());
+try {
+        LocalDate date = LocalDate.parse(dateString, format);
+        personalExpenses.setDateExpensePersonal(date);// Встановити поле дати як LocalDate
         service.save(personalExpenses);
         return ResponseEntity.ok().build();
+    }catch (DateTimeParseException e) {
+    System.out.println("Не правильний формат дати: " + dateString);
+    return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/show")
