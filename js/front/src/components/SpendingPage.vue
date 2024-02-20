@@ -39,6 +39,7 @@
         id="date"
         type="date"
         v-model="dateExpensePersonal"
+        @change="validateDate"
       />
     </div>
     <div class="row">
@@ -49,9 +50,9 @@
         id="type"
         v-model="expenseType"
       >
-        <option value="Їжа">Їжа</option>
-        <option value="Комунальні витрати">Комунальні витрати</option>
-        <option value="Інші">Інші витрати</option>
+        <option value="FOOD">Їжа</option>
+        <option value="UTILITY">Комунальні витрати</option>
+        <option value="OTHER">Інші витрати</option>
       </select>
     </div>
     <button type="submit">Додати</button>
@@ -102,13 +103,39 @@ export default {
           });
     },
 
+    validateDate() {
+      if (!this.dateExpensePersonal) {
+        console.error('Дата не вказана');
+        return false; // Повертаємо false, оскільки дата не вказана
+      }
+
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(this.dateExpensePersonal)) {
+        console.error('Неправильний формат дати');
+        return false; // Повертаємо false, оскільки дата має неправильний формат
+      }
+      // Додаткові перевірки, якщо потрібно
+      return true; // Повертаємо true, якщо всі перевірки успішні
+    },
     sendSpending(e) {
       e.preventDefault();
+      console.log('Дата перед відправленням:', this.dateExpensePersonal); // Виводимо значення дати в консоль
+      // Перевірка на null перед викликом методу validateDate()
+      if (!this.dateExpensePersonal) {
+        console.error('Дата не вказана');
+        return; // Виходимо з методу, якщо дата не вказана
+      }
+
+      // Виклик методу validateDate() тільки якщо дата не є null
+      if (!this.validateDate()) {
+        console.error('Неправильний формат дати');
+        return; // Виходимо з методу, якщо формат дати неправильний
+      }
       axios.post('/personal_expenses/api/expenses', {
         foodExpense: this.foodExpense,
         utilityExpense: this.utilityExpense,
         otherExpense: this.otherExpense,
-        datePersonalExpense: this.dateExpensePersonal,
+        dateExpensePersonal: this.dateExpensePersonal,
         expenseType: this.expenseType
       })
           .then(response => {
