@@ -3,23 +3,29 @@ package ua.ypon.accounting.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ua.ypon.accounting.models.ExpenseType;
 import ua.ypon.accounting.models.PersonalExpenses;
 import ua.ypon.accounting.services.PersonalExpenseService;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 
 /**
  * @author ua.ypon 15.01.2024
  */
-@RestController
-@RequestMapping("personal_expenses")
+@Controller
+@RequestMapping("/personal_expenses")
 public class PersonalExpensesController {
 
-    private static Logger log = LoggerFactory.getLogger(PersonalExpenses.class);
+    private static final Logger log = LoggerFactory.getLogger(PersonalExpenses.class);
 
     private final PersonalExpenseService service;
 
@@ -29,16 +35,36 @@ public class PersonalExpensesController {
     }
 
     @GetMapping("/api/expenses")
+    @ResponseBody
     public List<PersonalExpenses> getAllExpenses() {
         log.info("PersonalExpenses.getAllExpenses()");
         return service.findAll();
     }
+    @PostMapping()
+    @ResponseBody
+    public ResponseEntity<?> addExpense(@ModelAttribute("personalExpenses")
+                                            PersonalExpenses personalExpenses) {
+        log.info("PersonaExpenses.addExpense()");
+        service.save(personalExpenses);
+        String redirectUrl = "/personal_expenses/show";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create(redirectUrl));
+        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+    }
 
-    @PostMapping("/api/expenses")
-    public PersonalExpenses addExpense(@RequestBody PersonalExpenses personalExpenses) {
-        personalExpenses.setDateExpensePersonal(personalExpenses.getDateExpensePersonal());
+    @GetMapping("/show")
+    public String showExpensesPage(Model model) {
+        List<PersonalExpenses> expenses = service.findAll();
+        model.addAttribute("expenses", expenses);
+        log.info("Кількість витрат: {}", expenses.size());
+        return "personalExpenses/viewExpenses";
+    }
 
-        return service.save(personalExpenses);
+    @GetMapping("/new")
+    public String createNewExpenses(Model model) {
+        model.addAttribute("personalExpenses", new PersonalExpenses());
+        log.info("PersonalExpenses.createNewExpenses()");
+        return "personalExpenses/personalExpensesPOST";
     }
 
     @PutMapping("/api/expenses/{id}")
@@ -46,8 +72,9 @@ public class PersonalExpensesController {
         service.update(id, expenses);
     }
 
-    @DeleteMapping("/api/expenses/{id}")
+    @DeleteMapping("/{id}")
     public void deleteExpense(@PathVariable("id") long id) {
+        log.info("Запит на видалення {}", id);
         service.delete(id);
     }
 
