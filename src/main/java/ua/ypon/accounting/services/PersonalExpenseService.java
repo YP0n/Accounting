@@ -34,14 +34,13 @@ public class PersonalExpenseService {
     }
 
     @Transactional
-    public PersonalExpenses save(PersonalExpenses personalExpenses) {
+    public void save(PersonalExpenses personalExpenses) {
         try {
             log.info("Saving personal expense: {}", personalExpenses);
             personalExpensesRepository.save(personalExpenses);
         } catch (Exception e) {
             log.error("Error saving personal expense: {}", e.getMessage());
         }
-        return personalExpenses;
     }
 
     @Transactional

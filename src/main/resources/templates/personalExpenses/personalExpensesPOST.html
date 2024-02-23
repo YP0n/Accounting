@@ -6,55 +6,21 @@
 </head>
 <body>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('personalExpensesForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const expenseType = document.getElementById('expenseType').value;
-            const dateExpensePersonal = document.getElementById('dateExpensePersonal').value;
-
-            const serverDate = dateExpensePersonal;
-            const formData = new FormData();
-
-            formData.append('expenseType', expenseType);
-            formData.append('dateExpensePersonal', dateExpensePersonal);
-
-            document.querySelectorAll('input[type="text"]').forEach(input => {
-            formData.append(input.name, input.value);
-            });
-
-            formData.append('expenseType', document.getElementById('expenseType').value);
-
-            fetch('http://localhost:8080/personal_expenses/api/expenses', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(Object.fromEntries(formData))
-            })
-                .then(response => response.json())
-                .then(data => console.log('Success:', data))
-                .catch(error => console.error('Error:', error));
-        });
-    });
-</script>
-
-<form id="personalExpensesForm" accept-charset="UTF-8">
+<form th:method="POST" th:action="@{/personal_expenses}" th:object="${personalExpenses}">
     <label for="foodExpense">Їжа:______________</label>
-    <input type="text" id="foodExpense" name="foodExpense" required>
+    <input type="text" th:field="*{foodExpense}" id="foodExpense" required>
 </p>
     <label for="utilityExpense">Комунальні витрати:</label>
-    <input type="text" id="utilityExpense" name="utilityExpense" required>
+    <input type="text" th:field="*{utilityExpense}" id="utilityExpense" required>
 </p>
     <label for="otherExpense">Інші витрати:______</label>
-    <input type="text" id="otherExpense" name="otherExpense" required>
+    <input type="text" th:field="*{otherExpense}" id="otherExpense" required>
 </p>
     <label for="dateExpensePersonal">Дата витрат</label>
-    <input type="date" id="dateExpensePersonal" name="dateExpensePersonal" required>
+    <input type="date" th:field="*{dateExpensePersonal}" id="dateExpensePersonal" required>
 
     <label for="expenseType">Тип витрат</label>
-    <select id="expenseType" name="expenseType" required>
+    <select th:field="*{expenseType}" id="expenseType" required>
         <option value="FOOD">Їжа</option>
         <option value="UTILITY">Комунальні витрати</option>
         <option value="OTHER">Інші витрати</option>
