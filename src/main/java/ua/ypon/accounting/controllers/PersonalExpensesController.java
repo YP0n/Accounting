@@ -17,6 +17,7 @@ import ua.ypon.accounting.services.PersonalExpenseService;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author ua.ypon 15.01.2024
@@ -60,6 +61,23 @@ public class PersonalExpensesController {
         return "personalExpenses/viewExpenses";
     }
 
+    @GetMapping()
+    public String index(Model model) {
+        model.addAttribute("personal_expenses", service.index());
+        return "personalExpenses/index";
+    }
+
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") long id, Model model) {
+        Optional<PersonalExpenses> personalExpensesOptional = service.show(id);
+        if(personalExpensesOptional.isPresent()) {
+        PersonalExpenses personalExpenses = personalExpensesOptional.get();
+        model.addAttribute("personalExpenses", personalExpenses);
+        return "personalExpenses/show";
+    } else {
+        return "personalExpenses/error/404";
+        }
+    }
     @GetMapping("/new")
     public String createNewExpenses(Model model) {
         model.addAttribute("personalExpenses", new PersonalExpenses());
@@ -67,15 +85,27 @@ public class PersonalExpensesController {
         return "personalExpenses/personalExpensesPOST";
     }
 
-    @PutMapping("/api/expenses/{id}")
-    public void updateExpense(@PathVariable("id") long id, @RequestBody PersonalExpenses expenses) {
-        service.update(id, expenses);
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") long id) {
+        Optional<PersonalExpenses> expensesOptional = service.show(id);
+        PersonalExpenses personalExpenses = expensesOptional.orElse(new PersonalExpenses());
+        model.addAttribute("personalExpenses", personalExpenses);
+        return "personalExpenses/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("personalExpenses")
+                             PersonalExpenses personalExpenses,
+                         @PathVariable("id") long id) {
+        service.update(id, personalExpenses);
+        return "redirect:/personal_expenses";
     }
 
     @DeleteMapping("/{id}")
-    public void deleteExpense(@PathVariable("id") long id) {
-        log.info("Запит на видалення {}", id);
-        service.delete(id);
+    public String deleteExpense(@PathVariable("id") long id) {
+            log.info("Запит на видалення {}", id);
+            service.delete(id);
+            return "redirect:/personal_expenses/show";
     }
 
     @GetMapping("/api/sum-food-expenses")

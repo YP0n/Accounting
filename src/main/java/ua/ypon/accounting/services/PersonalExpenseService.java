@@ -1,5 +1,7 @@
 package ua.ypon.accounting.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,9 +11,7 @@ import ua.ypon.accounting.repositories.PersonalExpensesRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Optional;
 
 /**
  * @author ua.ypon 15.01.2024
@@ -43,14 +43,30 @@ public class PersonalExpenseService {
         }
     }
 
+
     @Transactional
-    public void update(long id, PersonalExpenses expenses) {
-        expenses.setId(id);
-        personalExpensesRepository.save(expenses);
+    public void update(long id, PersonalExpenses expensesUpdate) {
+        Optional<PersonalExpenses> updateToBeExpense = show(id);
+        if(updateToBeExpense.isPresent()) {
+            PersonalExpenses expenses = updateToBeExpense.get();
+            expenses.setDateExpensePersonal(expensesUpdate.getDateExpensePersonal());
+            expenses.setFoodExpense(expensesUpdate.getFoodExpense());
+            expenses.setUtilityExpense(expensesUpdate.getUtilityExpense());
+            expenses.setOtherExpense(expensesUpdate.getOtherExpense());
+        }
     }
+
     @Transactional
     public void delete(long id) {
         personalExpensesRepository.deleteById(id);
+    }
+
+    public Optional<PersonalExpenses> show(long id) {
+        return personalExpensesRepository.findById(id);
+    }
+
+    public List<PersonalExpenses> index() {
+        return personalExpensesRepository.findAll();
     }
 
     public double sumExpenseFood() {

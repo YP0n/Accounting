@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оновлення витрат</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}" th:object="${personalExpenses}">
+    <input type="hidden" name="_method" value="PATCH">
+    <label for="foodExpense">Введіть витрати на їжу</label>
+    <input type="text" th:field="*{foodExpense}" id="foodExpense"/>
+    <br/>
+    <label for="utilityExpense">Введіть витрати на комунальні послуги</label>
+    <input type="text" th:field="*{utilityExpense}" id="utilityExpense"/>
+    <br/>
+    <label for="otherExpense">Введіть інші витрати</label>
+    <input type="text" th:field="*{otherExpense}" id="otherExpense"/>
+    <br/>
+    <input type="submit" value="Оновити">
+</form>
+</body>
+</html>

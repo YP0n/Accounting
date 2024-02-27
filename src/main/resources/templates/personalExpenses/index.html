@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<div th:each="personalExpenses : ${personal_expenses}">
+    <p>Дата: <a th:href="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}" th:text="${personalExpenses.getDateExpensePersonal()}">date</a></p>
+    <p>Витрати на їжу: <a th:href="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}" th:text="${personalExpenses.getFoodExpense()}">food</a></p>
+    <p>Витрати на комунальні послуги: <a th:href="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}" th:text="${personalExpenses.getUtilityExpense()}">utility</a></p>
+    <p>Інші витрати: <a th:href="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}" th:text="${personalExpenses.getOtherExpense()}">other</a></p>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/personal_expenses/new">Create new expense</a>
+
+</body>
+</html>
