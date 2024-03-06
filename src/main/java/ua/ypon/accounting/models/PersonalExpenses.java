@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * @author ua.ypon 15.01.2024
  */
 @Entity
-@Table(name = "Personal_expenses")
+@Table(name = "personal_expenses")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

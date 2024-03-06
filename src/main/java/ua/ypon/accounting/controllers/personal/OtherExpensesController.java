@@ -38,7 +38,7 @@ public class OtherExpensesController {
     public ModelAndView getSumExpensesOtherBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
-        ModelAndView modelAndView = new ModelAndView("personalExpenses/getSumExpensesOther");
+        ModelAndView modelAndView = new ModelAndView("personalExpenses/other/getSumExpensesOther");
         double totalExpenses;
         if(startDate == null || endDate == null) {
             totalExpenses = otherExpenseService.calculateTotalOtherExpenseForPeriod(LocalDate.now(), LocalDate.now());

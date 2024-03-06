@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.IncomeShop;
 import ua.ypon.accounting.repositories.IncomesRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,6 +61,7 @@ public class IncomeService {
         }
     }
 
+    @Transactional
     public void delete(long id) { incomesRepository.deleteById(id); }
 
 }

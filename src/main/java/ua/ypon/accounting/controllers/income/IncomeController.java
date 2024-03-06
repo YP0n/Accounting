@@ -101,6 +101,7 @@ public class IncomeController {
 
     @DeleteMapping("/{id}")
     public String deleteIncome(@PathVariable("id") long id) {
+        log.info("Запит на видалення {}", id);
         incomeService.delete(id);
         return "redirect:/income_shop/show";
     }

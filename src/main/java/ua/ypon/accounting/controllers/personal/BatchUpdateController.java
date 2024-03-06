@@ -3,6 +3,7 @@ package ua.ypon.accounting.controllers.personal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +14,7 @@ import ua.ypon.accounting.models.BatchForm;
 import ua.ypon.accounting.models.PersonalExpenses;
 import ua.ypon.accounting.services.personal.PersonalExpenseService;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +89,10 @@ public class BatchUpdateController {
             List<PersonalExpenses> expensesList = batchForm.getExpensesList();
             log.info("Додавання витрат: " + expensesList.toString());
             service.saveExpenses(expensesList);
-            return ResponseEntity.ok().build();
+            String redirectUrl = "/personal_expenses/show";
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(URI.create(redirectUrl));
+            return new ResponseEntity<>(headers, HttpStatus.FOUND);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save expenses: " + e.getMessage());
         }

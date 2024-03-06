@@ -68,6 +68,7 @@ public class BusinessExpenseService {
         }
     }
 
+    @Transactional
     public void delete(long id) {
         businessExpensesRepository.deleteById(id);
     }

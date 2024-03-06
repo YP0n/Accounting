@@ -38,7 +38,7 @@ public class UtilityExpensesController {
     public ModelAndView getSumExpensesUtilityBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
-        ModelAndView modelAndView = new ModelAndView("personalExpenses/getSumExpensesUtility");
+        ModelAndView modelAndView = new ModelAndView("personalExpenses/utility/getSumExpensesUtility");
         double totalExpenses;
         if(startDate == null || endDate == null) {
             totalExpenses = utilityExpenseService.calculateTotalUtilityExpenseForPeriod(LocalDate.now(), LocalDate.now());

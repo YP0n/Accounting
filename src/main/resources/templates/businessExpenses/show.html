@@ -74,7 +74,7 @@
 
 <a th:href="@{/business_expenses/{id}/edit(id=${businessExpenses.getId()})}">Редагувати</a>
 
-<form th:method="POST" th:action="@{/business_expense/{id}(id=${businessExpenses.getId()})}">
+<form th:method="POST" th:action="@{/business_expenses/{id}(id=${businessExpenses.getId()})}">
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" value="Видалити">
 </form>

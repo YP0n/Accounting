@@ -40,10 +40,10 @@
     <td th:text="${expense.utilityExpense}"></td>
     <td th:text="${expense.otherExpense}"></td>
     <td>
-  <form th:method="POST" th:action="@{/personal_expenses/{id}(id=${expense.id})}">
-    <input type="hidden" name="_method" value="DELETE">
-    <button type="submit">Видалити</button>
-      </form>
+        <form th:method="POST" th:action="@{/personal_expenses/{id}(id=${expense.id})}">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit">Видалити</button>
+            </form>
     </td>
   </tr>
 </table>
@@ -51,7 +51,7 @@
 <br/>
 <hr/>
 
-<a href="/personal_expenses/newBusinessExpense">Створити нову персональну витрату</a>
+<a href="/personal_expenses/new">Створити нову персональну витрату</a>
 
 </body>
 </html>

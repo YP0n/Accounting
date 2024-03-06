@@ -6,9 +6,9 @@
 </head>
 <body>
 <form th:method="POST" th:action="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}" th:object="${personalExpenses}">
-    <input type="hidden" name="_method" value="PATCH">
-    <label for="datePersonalExpense">Дата</label>
-    <input type="date" th:field="datePersonalExpense" id="datePersonalExpense">
+    <input type="hidden" name="_method" value="PATCH"/>
+    <label for="dateExpensePersonal">Дата</label>
+    <input type="date" th:field="*{dateExpensePersonal}" id="dateExpensePersonal"/>
     <br/>
     <label for="foodExpense">Введіть витрати на їжу</label>
     <input type="text" th:field="*{foodExpense}" id="foodExpense"/>

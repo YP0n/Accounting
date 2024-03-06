@@ -37,7 +37,7 @@ public class FoodExpensesController {
     public ModelAndView getSumExpensesFoodBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
-        ModelAndView modelAndView = new ModelAndView("personalExpenses/getSumExpensesFood");
+        ModelAndView modelAndView = new ModelAndView("personalExpenses/food/getSumExpensesFood");
         double totalExpenses;
         if(startDate == null || endDate == null) {
             totalExpenses = foodExpensesService.calculateTotalFoodExpenseForPeriod(LocalDate.now(), LocalDate.now());
