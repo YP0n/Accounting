@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вибір проміжку дат та витрат</title>
+</head>
+<body>
+<h1>Виберіть проміжок дат та введіть витрати</h1>
+<form action="/batch_update/process_batch" method="post" th:object="${batchForm}">
+    <div>
+        <label for="startDate">Початкова дата:</label>
+        <input type="date" id="startDate" name="startDate" th:field="*{startDate}" required>
+    </div>
+    <div>
+        <label for="endDate">Кінцева дата:</label>
+        <input type="date" id="endDate" name="endDate" th:field="*{endDate}" required>
+    </div>
+    <button type="submit">Показати дати та введення витрат</button>
+</form>
+
+<form action="/batch_update/add_expenses" method="post" th:object="${batchForm}">
+    <ul>
+        <li th:each="expense, iterStat : *{expensesList}">
+            <label for="dateExpensePersonal" th:text="${expense.dateExpensePersonal}"></label>
+            <input type="hidden" id="dateExpensePersonal"
+                   th:field="*{expensesList[__${iterStat.index}__].dateExpensePersonal}"
+                   th:value="${expense.dateExpensePersonal}">
+            <label for="foodExpense">Витрати на їжу:</label>
+            <input type="number" id="foodExpense" th:field="*{expensesList[__${iterStat.index}__].foodExpense}"
+                   placeholder="Введіть витрати на їжу">
+            <label for="utilityExpense">Витрати на комунальні послуги:</label>
+            <input type="number" id="utilityExpense" th:field="*{expensesList[__${iterStat.index}__].utilityExpense}"
+                   placeholder="Введіть витрати на комунальні послуги">
+            <label for="otherExpense">Інші витрати:</label>
+            <input type="number" id="otherExpense" th:field="*{expensesList[__${iterStat.index}__].otherExpense}"
+                   placeholder="Введіть інші витрати">
+        </li>
+    </ul>
+    <button type="submit">Зберегти витрати</button>
+</form>
+</body>
+</html>

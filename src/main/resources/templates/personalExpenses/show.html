@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org">
+<html lang="ua" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Show</title>
 </head>
 <body>
+
+<label>Дата:</label>
+<p th:text="${personalExpenses.getDateExpensesPersonal()}">VALUE</p>
+
+<label>ID:</label>
+<p th:text="${personalExpenses.getId()}">VALUE</p>
 
 <label>Витрати на їжу:</label>
 <p th:text="${personalExpenses.getFoodExpense()}">VALUE</p>
@@ -24,7 +30,7 @@
 <label>ID:</label>
 <p th:text="${personalExpenses.getId()}">VALUE</p>
 
-<a th:href="@{/personal_expenses/{id}/edit(id=${personalExpenses.getId()})}">Edit</a>
+<a th:href="@{/personal_expenses/{id}/edit(id=${personalExpenses.getId()})}">Редагувати</a>
 
 <form th:method="POST" th:action="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}">
     <input type="hidden" name="_method" value="DELETE">

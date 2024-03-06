@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+<div th:each="businessExpenses : ${business_expenses}">
+    <p>Дата: <a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getDateExpensesBusiness()}">date</a></p>
+    <p>Витрати на паливо: <a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getFuel()}">fuel</a></p>
+    <p>Витрати на обслуговування авто: <a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getMaintenance()}">maintenance</a></p>
+    <p>Зарплатня Валя<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getSalaryValya()}">Valya</a></p>
+    <p>Зарплатня Іра<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getSalaryIra()}">Ira</a></p>
+    <p>Комуналка<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getUtilityAndWater()}">utility</a></p>
+    <p>Оренда<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getRent()}">rent</a></p>
+    <p>Єдиний податок<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getTaxSingle()}">taxSingle</a></p>
+    <p>ЄСВ<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getTaxPension()}">taxPension</a></p>
+    <p>Витрати на товар поставлений власником<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getOwner()}">owner</a></p>
+    <p>Витрати на товар поставлений постачальниками<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getSuppliers()}">suppliers</a></p>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/business_expenses/new">Створити нову бізнес витрату</a>
+
+</body>
+</html>

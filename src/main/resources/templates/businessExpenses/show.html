@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Дата</label>
+<p th:text="${businessExpenses.getDateExpensesBusiness()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на паливо</label>
+<p th:text="${businessExpenses.getFuel()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на обслуговування авто</label>
+<p th:text="${businessExpenses.getMaintenance()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на зарплатню Валі</label>
+<p th:text="${businessExpenses.getSalaryValya}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на зарплатню Ірі</label>
+<p th:text="${businessExpenses.getSalaryIra()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на комуналку</label>
+<p th:text="${businessExpenses.getUtilityAndWater()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на оренду</label>
+<p th:text="${businessExpenses.getRent()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на єдиний податок</label>
+<p th:text="${businessExpenses.getTaxSingle()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на ЄСВ</label>
+<p th:text="${businessExpenses.getTaxPension()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на постачання товарів власником</label>
+<p th:text="${businessExpenses.getOwner()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${businessExpenses.getId()}">VALUE</p>
+
+<label>Витрати на постачання товарів від партнерів</label>
+<p th:text="${businessExpenses.getSuppliers()}">VALUE</p>
+
+<a th:href="@{/business_expenses/{id}/edit(id=${businessExpenses.getId()})}">Редагувати</a>
+
+<form th:method="POST" th:action="@{/business_expense/{id}(id=${businessExpenses.getId()})}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Видалити">
+</form>
+</body>
+</html>

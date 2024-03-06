@@ -1,90 +1,44 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Додати витрати до бази даних для бізнесу</title>
 </head>
 <body>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('businessExpensesForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            const businessExpensesType = document.getElementById('businessExpensesType').value;
-            const dateExpensesBusiness = document.getElementById('dateExpensesBusiness').value;
-            const serverDate = dateExpensesBusiness;
-            const formData = new FormData();
-            formData.append('businessExpensesType', businessExpensesType);
-            formData.append('dateExpensesBusiness', dateExpensesBusiness);
-
-            document.querySelectorAll('input[type="text"]').forEach(input => {
-                formData.append(input.name, input.value);
-            });
-
-            formData.append('businessExpensesType', document.getElementById('businessExpensesType').value);
-
-            fetch('http://localhost:8080/business_expenses/api/business_expense', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(Object.fromEntries(formData))
-            })
-                .then(response => response.json())
-                .then(data => console.log('Success:', data))
-                .catch(error => console.error('Error:', error));
-        });
-    });
-</script>
-
-<form id="businessExpensesForm" accept-charset="UTF-8">
+<form th:method="POST" th:action="@{/business_expenses}" th:object="${businessExpenses}">
     <label for="fuel">Витрати на паливо:______________</label>
-    <input type="text" id="fuel" name="fuel" required>
-</p>
+    <input type="text" id="fuel" th:field="*{fuel}" required>
+    <br/>
     <label for="maintenance">Витрати на ТО:_________________</label>
-    <input type="text" id="maintenance" name="maintenance" required>
-</p>
+    <input type="text" id="maintenance" th:field="*{maintenance}" required>
+    <br/>
     <label for="salaryValya">Витрати на зарплатню Валі:_______</label>
-    <input type="text" id="salaryValya" name="salaryValya" required>
-</p>
+    <input type="text" id="salaryValya" th:field="*{salaryValya}" required>
+    <br/>
     <label for="salaryIra">Витрати на зарплатню Ірі:________</label>
-    <input type="text" id="salaryIra" name="salaryIra" required>
-</p>
+    <input type="text" id="salaryIra" th:field="*{salaryIra}" required>
+    <br/>
     <label for="utilityAndWater">Витрати на комуналку та воду:____</label>
-    <input type="text" id="utilityAndWater" name="utilityAndWater" required>
-</p>
+    <input type="text" id="utilityAndWater" th:field="*{utilityAndWater}" required>
+    <br/>
     <label for="rent">Витрати на оренду:______________</label>
-    <input type="text" id="rent" name="rent" required>
-</p>
+    <input type="text" id="rent" th:field="*{rent}" required>
+    <br/>
     <label for="taxSingle">Єдиний податок:________________</label>
-    <input type="text" id="taxSingle" name="taxSingle" required>
-</p>
+    <input type="text" id="taxSingle" th:field="*{taxSingle}" required>
+    <br/>
     <label for="taxPension">ЄСВ:__________________________</label>
-    <input type="text" id="taxPension" name="taxPension" required>
-</p>
+    <input type="text" id="taxPension" th:field="*{taxPension}" required>
+    <br/>
     <label for="owner">Доставка товарів господарем:_____</label>
-    <input type="text" id="owner" name="owner" required>
-</p>
+    <input type="text" id="owner" th:field="*{owner}" required>
+    <br/>
     <label for="suppliers">Доставка товарів постачальниками:</label>
-    <input type="text" id="suppliers" name="suppliers" required>
-</p>
+    <input type="text" id="suppliers" th:field="*{suppliers}" required>
+    <br/>
     <label for="dateExpensesBusiness">Дата витрат</label>
     <input type="date" id="dateExpensesBusiness" name="dateExpensesBusiness" required>
-
-    <label for="businessExpensesType">Тип витрат</label>
-    <select id="businessExpensesType" name="businessExpensesType" required>
-        <option value="FUEL">Паливо</option>
-        <option value="MAINTENANCE">Техобслуговування</option>
-        <option value="SALARYVALYA">Зарплатня Валя</option>
-        <option value="SALARYIRA">Зарплатня Іра</option>
-        <option value="UTILITYANDWATER">Комуналка та вода</option>
-        <option value="RENT">Оренда</option>
-        <option value="TAXSINGLE">Єдиний податок</option>
-        <option value="TAXPENSION">ЄСВ</option>
-        <option value="OWNER" >Постачальник господар</option>
-        <option value="SUPPLIERS">Постачальники</option>
-    </select>
 
     <input type="submit" value="Додати">
 </form>

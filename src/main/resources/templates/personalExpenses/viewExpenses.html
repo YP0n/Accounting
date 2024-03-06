@@ -31,7 +31,6 @@
     <th>Витрати на їжу</th>
     <th>Витрати на комунальні послуги</th>
     <th>Інші витрати</th>
-    <th>Тип витрат</th>
     <th></th>
   </tr>
   <tr th:each="expense : ${expenses}">
@@ -40,7 +39,6 @@
     <td th:text="${expense.foodExpense}"></td>
     <td th:text="${expense.utilityExpense}"></td>
     <td th:text="${expense.otherExpense}"></td>
-    <td th:text="${expense.expenseType}"></td>
     <td>
   <form th:method="POST" th:action="@{/personal_expenses/{id}(id=${expense.id})}">
     <input type="hidden" name="_method" value="DELETE">
@@ -49,6 +47,11 @@
     </td>
   </tr>
 </table>
+
+<br/>
+<hr/>
+
+<a href="/personal_expenses/newBusinessExpense">Створити нову персональну витрату</a>
 
 </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оновлення витрат</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:object="${businessExpenses}">
+    <input type="hidden" name="_method" value="PATCH">
+    <label for="dateExpensesBusiness"></label>
+    <input type="date" th:field="*{dateExpensesBusiness}" id="dateExpensesBusiness"/>
+    <br/>
+    <label for="fuel">Паливо</label>
+    <input type="text" th:field="*{fuel}" id="fuel"/>
+    <br/>
+    <label for="maintenance">ТО</label>
+    <input type="text" th:field="*{maintenance}" id="maintenance"/>
+    <br/>
+    <label for="salaryValya">Валя</label>
+    <input type="text" th:field="*{salaryValya}" id="salaryValya"/>
+    <br/>
+    <label for="salaryIra">Іра</label>
+    <input type="text" th:field="*{salaryIra}" id="salaryIra"/>
+    <br/>
+    <label for="utilityAndWater">Комуналка</label>
+    <input type="text" th:field="*{utilityAndWater}" id="utilityAndWater"/>
+    <br/>
+    <label for="rent">Оренда</label>
+    <input type="text" th:field="*{rent}" id="rent"/>
+    <br/>
+    <label for="taxSingle">Єдиний податок</label>
+    <input type="text" th:field="*{taxSingle}" id="taxSingle"/>
+    <br/>
+    <label for="taxPension">ЄСВ</label>
+    <input type="text" th:field="*{taxPension}" id="taxPension"/>
+    <br/>
+    <label for="owner">Власник</label>
+    <input type="text" th:field="*{owner}" id="owner"/>
+    <br/>
+    <label for="suppliers">Постачальники</label>
+    <input type="text" th:field="*{suppliers}" id="suppliers"/>
+    <br/>
+    <input type="submit" value="Оновити">
+</form>
+</body>
+</html>

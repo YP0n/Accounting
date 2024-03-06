@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отримати суму безготівкових доходів</title>
+</head>
+<body>
+<form action="http://localhost:8080/cashless_income/api/total_sum_cashless_between_date" method="get">
+    <label>
+        <input type="date" name="startDate" placeholder="Початкова дата">
+    </label>
+    <label>
+        <input type="date" name="endDate" placeholder="Кінцева дата">
+    </label>
+    <input type="submit" value="Отримати">
+
+    <h2>Сума безготівкових доходів за період:</h2>
+    <h3 th:text="${'Сума безготівкових доходів за період ' + ': ' + totalIncomeCashless}"></h3>
+</form>
+
+</body>
+</html>

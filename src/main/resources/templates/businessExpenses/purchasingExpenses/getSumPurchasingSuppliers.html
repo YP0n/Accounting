@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отримати суму витрат постачання товару агентами</title>
+</head>
+<body>
+<form action="http://localhost:8080/suppliers_purchasing/api/sum_expenses_purchasing_suppliers_between_date" method="get">
+    <label>
+        <input type="date" name="startDate" placeholder="Початкова дата">
+    </label>
+    <label>
+        <input type="date" name="endDate" placeholder="Кінцева дата">
+    </label>
+    <input type="submit" value="Отримати">
+
+    <h2>Сума витрат за обраною категорією:</h2>
+    <h3 th:text="${'Сума витрат на постачання товару агентами ' + ': ' + totalPurchasingSuppliers}"></h3>
+</form>
+
+</body>
+</html>

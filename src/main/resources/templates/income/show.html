@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Дата</label>
+<p th:text="${incomeShop.getDateIncome()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Готівка</label>
+<p th:text="${incomeShop.getIncomeCash()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Безготівка</label>
+<p th:text="${incomeShop.getIncomeCashless()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Інший дохід</label>
+<p th:text="${incomeShop.getIncomeOther()}">VALUE</p>
+
+<a th:href="@{/income_shop/{id}/edit(id=${incomeShop.getId()})}">Редагувати</a>
+
+<form th:method="POST" th:action="@{/income_shop/{id}(id=${incomeShop.getId()})}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Видалити">
+</form>
+
+</body>
+</html>

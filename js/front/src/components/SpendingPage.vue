@@ -41,19 +41,6 @@
         v-model="dateExpensePersonal"
       />
     </div>
-    <div class="row">
-      <label for="type">
-        Tип витрат:
-      </label>
-      <select
-        id="type"
-        v-model="expenseType"
-      >
-        <option value="Їжа">Їжа</option>
-        <option value="Комунальні витрати">Комунальні витрати</option>
-        <option value="Інші">Інші витрати</option>
-      </select>
-    </div>
     <button type="submit">Додати</button>
   </form>
 
@@ -61,7 +48,7 @@
       <h2>Список витрат</h2>
       <ul>
         <li v-for="expense in expenses" :key="expense.id">
-          {{ expense.foodExpense }} - {{ expense.utilityExpense }} - {{ expense.otherExpense }} - {{ expense.dateExpensePersonal }} - {{ expense.expenseType }}
+          {{ expense.foodExpense }} - {{ expense.utilityExpense }} - {{ expense.otherExpense }} - {{ expense.dateExpensePersonal }}
         </li>
       </ul>
     </div>
@@ -80,7 +67,6 @@ export default {
       utilityExpense: '',
       otherExpense: '',
       dateExpensePersonal: '',
-      expenseType: '',
       expenses: [] //Масив для збереження списку витрат
     }
   },
@@ -108,8 +94,7 @@ export default {
         foodExpense: this.foodExpense,
         utilityExpense: this.utilityExpense,
         otherExpense: this.otherExpense,
-        datePersonalExpense: this.dateExpensePersonal,
-        expenseType: this.expenseType
+        datePersonalExpense: this.dateExpensePersonal
       })
           .then(response => {
             console.log(response.data)
@@ -118,7 +103,6 @@ export default {
       this.utilityExpense = '';
       this.otherExpense = '';
       this.dateExpensePersonal = '';
-      this.expenseType = '';
     })
 .catch(error => {
   console.error('Помилка при додаванні витрати:', error);

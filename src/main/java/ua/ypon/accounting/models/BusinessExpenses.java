@@ -27,10 +27,10 @@ public class BusinessExpenses {
     @Column(name = "maintenance")
     private double maintenance;
 
-    @Column(name = "salary_Valya")
+    @Column(name = "salary_v")
     private double salaryValya;
 
-    @Column(name = "salary_Ira")
+    @Column(name = "salary_i")
     private double salaryIra;
 
     @Column(name = "utility_and_water")
@@ -54,22 +54,4 @@ public class BusinessExpenses {
     @Column(name = "date_expense_business")
     private LocalDate dateExpensesBusiness;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "business_expenses_type")
-    private BusinessExpensesType businessExpensesType;
-
-    public double getAmount(BusinessExpensesType businessExpensesType) {
-        return switch (businessExpensesType) {
-            case FUEL -> fuel;
-            case MAINTENANCE -> maintenance;
-            case SALARYVALYA -> salaryValya;
-            case SALARYIRA -> salaryIra;
-            case UTILITYANDWATER -> utilityAndWater;
-            case RENT -> rent;
-            case TAXSINGLE -> taxSingle;
-            case TAXPENSION -> taxPension;
-            case OWNER -> owner;
-            case SUPPLIERS -> suppliers;
-        };
-    }
 }

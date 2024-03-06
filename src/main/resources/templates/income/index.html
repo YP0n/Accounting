@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+
+<div th:each="incomeShop : ${income_shop}">
+    <p>Дата: <a th:href="@{/income_shop/{id}(id=${incomeShop.getId()})}" th:text="${incomeShop.getDateIncome()}">date</a></p>
+    <p>Дохід готівковий: <a th:href="@{/income_shop/{id}(id=${incomeShop.getId()})}" th:text="${incomeShop.getIncomeCash()}">cash</a></p>
+    <p>Дохід безготівковий: <a th:href="@{/income_shop/{id}(id=${incomeShop.getId()})}" th:text="${incomeShop.getIncomeCashless()}">cashless</a></p>
+    <p>Дохід інший: <a th:href="@{/income_shop/{id}(id=${incomeShop.getId()})}" th:text="${incomeShop.getIncomeOther()}">other</a></p>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/income_shop/new_income">Створити новий дохід</a>
+
+</body>
+</html>

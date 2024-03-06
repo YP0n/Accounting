@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оновлення доходів</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/income_shop/{id}(id=${incomeShop.getId()})}" th:object="${incomeShop}">
+    <input type="hidden" name="_method" value="PATCH">
+    <label for="dateIncome"></label>
+    <input type="date" th:field="*{dateIncome}" id="dateIncome"/>
+    <br/>
+    <label for="incomeCash"></label>
+    <input type="text" th:field="*{incomeCash}" id="incomeCash"/>
+    <br/>
+    <label for="incomeCashless"></label>
+    <input type="text" th:field="*{incomeCashless}" id="incomeCashless"/>
+    <br/>
+    <label for="incomeOther"></label>
+    <input type="text" th:field="*{incomeOther}" id="incomeOther"/>
+    <br/>
+    <input type="submit" value="Оновити">
+
+</form>
+</body>
+</html>

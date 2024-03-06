@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отримати суму готівкових доходів</title>
+</head>
+<body>
+<form action="http://localhost:8080/cash_income/api/total_sum_cash_between_date" method="get">
+    <label>
+        <input type="date" name="startDate" placeholder="Початкова дата">
+    </label>
+    <label>
+        <input type="date" name="endDate" placeholder="Кінцева дата">
+    </label>
+    <input type="submit" value="Отримати">
+
+    <h2>Сума готівкових доходів за період:</h2>
+    <h3 th:text="${'Сума готівкових доходів за період ' + ': ' + totalIncomeCash}"></h3>
+</form>
+
+</body>
+</html>

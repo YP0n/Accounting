@@ -1,71 +1,24 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="uk" xmlns:th="http://thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Додати дохід до бази даних</title>
 </head>
 <body>
 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('incomeForm').addEventListener('submit', function (event) {
-      event.preventDefault();
 
-      const incomeType = document.getElementById('incomeType').value;
-      const dateIncome = document.getElementById('dateIncome').value;
-
-      // Використовую вхідне значення dateIncome безпосередньо
-      const serverDate = dateIncome;
-
-      // Створюю новий об'єкт FormData
-      const formData = new FormData();
-
-      // Додаю оброблені дані до форми
-      formData.append('incomeType', incomeType);
-      formData.append('dateIncome', serverDate);
-
-      // Отримую інші дані з форми
-      document.querySelectorAll('input[type="text"]').forEach(input => {
-        formData.append(input.name, input.value);
-      });
-
-      // Отримую дані з вибору
-      formData.append('incomeType', document.getElementById('incomeType').value);
-
-      // Відправляю дані на сервер
-      fetch('http://localhost:8080/income/api/income', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(Object.fromEntries(formData))
-      })
-              .then(response => response.json())
-              .then(data => console.log('Success:', data))
-              .catch(error => console.error('Error:', error));
-    });
-  });
-</script>
-
-<form id="incomeForm" accept-charset="UTF-8">
+<form th:method="POST" th:action="@{/income_shop}" th:object="${income}">
   <label for="incomeCash">Дохід готівкою:____</label>
-  <input type="text" id="incomeCash" name="incomeCash" required>
-<p>
+  <input type="text" id="incomeCash" th:field="*{incomeCash}" required>
+<br/>
   <label for="incomeCashless">Безготівковий дохід:</label>
-  <input type="text" id="incomeCashless" name="incomeCashless" required>
-<p>
+  <input type="text" id="incomeCashless" th:field="*{incomeCashless}" required>
+  <br/>
   <label for="incomeOther">Інший дохід:_______</label>
-  <input type="text" id="incomeOther" name="incomeOther" required>
-<p>
+  <input type="text" id="incomeOther" th:field="*{incomeOther}" required>
+  <br/>
   <label for="dateIncome">Дата доходу:</label>
-  <input type="date" id="dateIncome" name="dateIncome" required>
-
-  <label for="incomeType">Тип доходу:</label>
-  <select id="incomeType" name="incomeType" required>
-    <option value="CASH">Готівкою</option>
-    <option value="CASHLESS">Безготівковий</option>
-    <option value="OTHER">Інший</option>
-  </select>
+  <input type="date" id="dateIncome" th:field="*{dateIncome}" required>
 
   <input type="submit" value="Додати">
 </form>

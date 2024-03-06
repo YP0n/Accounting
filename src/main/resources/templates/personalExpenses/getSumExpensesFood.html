@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отримати суму витрат по продуктам харчування</title>
+</head>
+<body>
+<form action="http://localhost:8080/food_expenses/api/sum-expenses-food-between-date" method="get">
+    <label>
+        <input type="date" name="startDate" placeholder="Початкова дата">
+    </label>
+    <label>
+        <input type="date" name="endDate" placeholder="Кінцева дата">
+    </label>
+    <input type="submit" value="Отримати">
+</form>
+
+<h2>Сума витрат за обраною категорією:</h2>
+<h3 th:text="${'Сума витрат за категорією FOOD ' + ': ' + totalExpenses}"></h3>
+
+</body>
+</html>
