@@ -36,7 +36,7 @@ public class BusinessExpensesController {
     @ResponseBody
     public List<BusinessExpenses> getAllExpenses() {
         log.info("Expense.getAllExpenses()");
-        return service.findAll();
+        return service.index();
     }
 
     @GetMapping("/newBusinessExpense")
@@ -60,7 +60,7 @@ public class BusinessExpensesController {
 
     @GetMapping("/show")
     public String showBusinessExpensesPage(Model model) {
-        List<BusinessExpenses> expenses = service.findAll();
+        List<BusinessExpenses> expenses = service.index();
         model.addAttribute("expenses", expenses);
         log.info("Кількість витрат: {}", expenses.size());
         return "businessExpenses/viewBusinessExpenses";

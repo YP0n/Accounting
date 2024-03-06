@@ -26,11 +26,6 @@ public class BusinessExpenseService {
     public BusinessExpenseService(BusinessExpensesRepository businessExpensesRepository) {
         this.businessExpensesRepository = businessExpensesRepository;
     }
-
-    public List<BusinessExpenses> findAll() {
-        return businessExpensesRepository.findAll();
-    }
-
     public List<BusinessExpenses> index() {
         return businessExpensesRepository.findAll();
     }
