@@ -18,9 +18,4 @@ public interface BusinessExpensesRepository extends JpaRepository<BusinessExpens
     @Query("SELECT b FROM BusinessExpenses b WHERE b.dateExpensesBusiness BETWEEN :startDate AND :endDate")
     List<BusinessExpenses> findAllByDateExpensesBusinessBetweenWithLazyLoading(LocalDate startDate, LocalDate endDate);
 
-    @Query("SELECT b FROM BusinessExpenses b LEFT JOIN FETCH b.fuel")
-    List<BusinessExpenses> findAllFuelWithLazyLoading();
-
-    @Query("SELECT b FROM BusinessExpenses b LEFT JOIN FETCH b.maintenance")
-    List<BusinessExpenses> findAllMaintenanceWithLazyLoading();
 }

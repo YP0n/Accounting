@@ -14,7 +14,7 @@ import java.time.LocalDate;
  * @author ua.ypon 02.03.2024
  */
 @Controller
-@RequestMapping("car_expenses")
+@RequestMapping("/car_expenses")
 public class CarExpensesController {
     private final CarExpensesService service;
 
@@ -26,16 +26,16 @@ public class CarExpensesController {
     @GetMapping("/api/total_sum_fuel")
     public ModelAndView getTotalSumExpensesFuel() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/carExpenses/getSumExpensesFuel");
-        double totalExpensesFuel;
-        totalExpensesFuel = service.sumExpensesFuel();
-        modelAndView.addObject("totalExpensesFuel", totalExpensesFuel);
+        double totalExpenses;
+        totalExpenses = service.sumExpensesFuel();
+        modelAndView.addObject("totalExpenses", totalExpenses);
         return modelAndView;
     }
     @GetMapping("/api/total_sum_maintenance")
     public ModelAndView getTotalSumExpensesMaintenance() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/carExpenses/getSumExpensesMaintenance");
-        double totalExpensesMaintenance = service.sumExpensesMaintenance();
-        modelAndView.addObject("totalExpensesMaintenance", totalExpensesMaintenance);
+        double totalExpenses = service.sumExpensesMaintenance();
+        modelAndView.addObject("totalExpenses", totalExpenses);
         return modelAndView;
     }
 

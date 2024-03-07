@@ -34,7 +34,7 @@ public class CarExpensesService {
      */
     public double sumExpensesFuel() {
         try {
-            return businessExpensesRepository.findAllFuelWithLazyLoading()
+            return businessExpensesRepository.findAll()
                     .stream()
                     .mapToDouble(BusinessExpenses::getFuel)
                     .sum();
@@ -68,8 +68,9 @@ public class CarExpensesService {
      */
     public double sumExpensesMaintenance() {
         try {
-            return businessExpensesRepository.findAllMaintenanceWithLazyLoading().stream()
-                    .mapToDouble(BusinessExpenses::getFuel)
+            return businessExpensesRepository.findAll()
+                    .stream()
+                    .mapToDouble(BusinessExpenses::getMaintenance)
                     .sum();
         } catch (Exception e) {
             log.error("Помилка при обчисленні витрат на обслуговування: {}", e.getMessage());
@@ -86,7 +87,7 @@ public class CarExpensesService {
         try {
             return businessExpensesRepository.findAllByDateExpensesBusinessBetweenWithLazyLoading(startDate, endDate)
                     .stream()
-                    .mapToDouble(BusinessExpenses::getFuel)
+                    .mapToDouble(BusinessExpenses::getMaintenance)
                     .sum();
         } catch (Exception e) {
             log.error("Помилка при обчисленні загальних витрат на пальне за період: {}", e.getMessage());

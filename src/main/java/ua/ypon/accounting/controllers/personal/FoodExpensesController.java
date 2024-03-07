@@ -16,7 +16,7 @@ import java.time.LocalDate;
  * @author ua.ypon 23.02.2024
  */
 @Controller
-@RequestMapping("food_expenses")
+@RequestMapping("/food_expenses")
 public class FoodExpensesController {
     private static final Logger log = LoggerFactory.getLogger(FoodExpensesController.class);
 
@@ -28,8 +28,12 @@ public class FoodExpensesController {
     }
 
     @GetMapping("/api/sum_food_expenses")
-    public double getSumFoodExpenses() {
-        return foodExpensesService.sumExpenseFood();
+    public ModelAndView getSumFoodExpenses() {
+        ModelAndView modelAndView = new ModelAndView("personalExpenses/food/getSumExpensesFood");
+        double totalExpenses;
+        totalExpenses = foodExpensesService.sumExpenseFood();
+        modelAndView.addObject("totalExpenses", totalExpenses);
+        return modelAndView;
     }
 
 

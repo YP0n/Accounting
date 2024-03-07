@@ -30,11 +30,15 @@ public class OtherExpensesController {
     }
 
     @GetMapping("/api/sum-other-expenses")
-    public double getSumOtherExpenses() {
-        return otherExpenseService.sumExpenseOther();
+    public ModelAndView getSumOtherExpenses() {
+        ModelAndView modelAndView = new ModelAndView("personalExpenses/other/getSumExpensesOther");
+        double totalExpenses;
+        totalExpenses = otherExpenseService.sumExpenseOther();
+        modelAndView.addObject("totalExpenses", totalExpenses);
+        return modelAndView;
     }
 
-    @GetMapping("/api/sum-expenses-other-between-date")
+    @GetMapping("/api/sum_expenses_other_between_date")
     public ModelAndView getSumExpensesOtherBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {

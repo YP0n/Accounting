@@ -14,7 +14,7 @@ import java.time.LocalDate;
  * @author ua.ypon 02.03.2024
  */
 @Controller
-@RequestMapping("operation_expenses")
+@RequestMapping("/operation_expenses")
 public class OperationExpensesController {
 
     private final OperationExpensesService service;
