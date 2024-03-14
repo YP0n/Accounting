@@ -3,6 +3,7 @@ package ua.ypon.accounting.services.income;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.IncomeShop;
@@ -26,7 +27,7 @@ public class IncomeService {
         this.incomesRepository = incomesRepository;
     }
 
-    public List<IncomeShop> index() { return incomesRepository.findAll(); }
+    public List<IncomeShop> index() { return incomesRepository.findAll(Sort.by("dateIncome")); }
 
     @Transactional
     public void save(IncomeShop incomeShop) {

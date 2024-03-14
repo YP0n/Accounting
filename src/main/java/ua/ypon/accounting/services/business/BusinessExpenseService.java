@@ -3,6 +3,7 @@ package ua.ypon.accounting.services.business;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.BusinessExpenses;
@@ -27,7 +28,7 @@ public class BusinessExpenseService {
         this.businessExpensesRepository = businessExpensesRepository;
     }
     public List<BusinessExpenses> index() {
-        return businessExpensesRepository.findAll();
+        return businessExpensesRepository.findAll(Sort.by("dateExpensesBusiness"));
     }
 
     @Transactional
