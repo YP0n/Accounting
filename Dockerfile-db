@@ -1,4 +1,2 @@
 FROM postgres:latest
-ENV POSTGRES_DB=accounting
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PASSWORD=postgres
+COPY backup.sql /docker-entrypoint-initdb.d/
