@@ -53,16 +53,16 @@
 
     <template v-if="expenses && expenses.length">
       <h2>Список витрат</h2>
-      <ul>
-        <li v-for="expense in expenses" :key="expense.id">
-          {{ expense.foodExpense }} -
-          {{ expense.utilityExpense }} -
-          {{ expense.otherExpense }} -
-          {{ expense.dateExpensePersonal }} -
-          {{ expense.expenseType }}
-        </li>
-      </ul>
-      <table>
+<!--      <ul>-->
+<!--        <li v-for="expense in expenses" :key="expense.id">-->
+<!--          {{ expense.foodExpense }} - -->
+<!--          {{ expense.utilityExpense }} - -->
+<!--          {{ expense.otherExpense }} - -->
+<!--          {{ expense.dateExpensePersonal }} - -->
+<!--          {{ expense.expenseType }}-->
+<!--        </li>-->
+<!--      </ul>-->
+      <table class="data-table">
         <thead>
           <tr>
             <th>Їжа</th>
@@ -85,48 +85,48 @@
     </template>
 
 <!--    TODO: Just example. Should be removed-->
-    <h2>Список витрат</h2>
-    <table class="data-table">
-      <thead>
-        <tr>
-          <th>Їжа</th>
-          <th>Комунальні</th>
-          <th>Інші</th>
-          <th>Дата</th>
-          <th>Тип Витрат</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-        </tr>
-      </tbody>
-    </table>
+<!--    <h2>Список витрат</h2>-->
+<!--    <table class="data-table">-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th>Їжа</th>-->
+<!--          <th>Комунальні</th>-->
+<!--          <th>Інші</th>-->
+<!--          <th>Дата</th>-->
+<!--          <th>Тип Витрат</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        <tr>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--          <td>1</td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
 
     <teleport to="body">
       <main-loader v-if="isLoading" />
