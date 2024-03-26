@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SpendingPage from './components/SpendingPage.vue'
+import SpendingPage from './pages/SpendingPage.vue'
 
 export default {
   name: 'App',
@@ -13,6 +13,6 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss">
+@import './css/main.scss';
 </style>
