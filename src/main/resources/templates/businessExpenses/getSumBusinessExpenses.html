@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Отримати витрати по бізнесу</title>
+</head>
+<body>
+<form action="http://localhost:8080/business_expenses/api/get_sum_business_expenses_between_date" method="get">
+    <label>
+        <input type="date" name="startDate" placeholder="Початкова дата">
+    </label>
+    <label>
+        <input type="date" name="endDate" placeholder="Кінцева дата">
+    </label>
+    <label>
+        Оберіть категорію:
+        <select name="businessExpensesType">
+            <option value="FUEL" th:selected="${businessExpensesType == 'FUEL'}">Паливо</option>
+            <option value="MAINTENANCE" th:selected="${businessExpensesType == 'MAINTENANCE'}">Техобслуговування
+            </option>
+            <option value="SALARYVALYA" th:selected="${businessExpensesType == 'SALARYVALYA'}">Зарплатня Валя</option>
+            <option value="SALARYIRA" th:selected="${businessExpensesType == 'SALARYIRA'}">Зарплатня Іра</option>
+            <option value="UTILITYANDWATER" th:selected="${businessExpensesType == 'UTILITYANDWATER'}">Комуналка та
+                вода</option>
+            <option value="RENT" th:selected="${businessExpensesType == 'RENT'}">Оренда</option>
+            <option value="TAXSINGLE" th:selected="${businessExpensesType == 'TAXSINGLE'}">Єдиний податок</option>
+            <option value="TAXPENSION" th:selected="${businessExpensesType == 'TAXPENSION'}">ЄСВ</option>
+            <option value="OWNER" th:selected="${businessExpensesType == 'OWNER'}">Постачальник господар</option>
+            <option value="SUPPLIERS" th:selected="${businessExpensesType == 'SUPPLIERS'}">Постачальники</option>
+        </select>
+    </label>
+    <input type="submit" value="Отримати">
+</form>
+
+<h2>Сума витрат за обраною категорією</h2>
+<h3 th:text="${'Сума витрат за категорією ' + businessExpensesType + ': ' + totalExpenses}"></h3>
+
+</body>
+</html>

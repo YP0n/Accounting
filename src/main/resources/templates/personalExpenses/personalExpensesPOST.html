@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Додати витрати до бази даних</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/personal_expenses}" th:object="${personalExpenses}">
+    <label for="foodExpense">Їжа:______________</label>
+    <input type="text" th:field="*{foodExpense}" id="foodExpense" required>
+</p>
+    <label for="utilityExpense">Комунальні витрати:</label>
+    <input type="text" th:field="*{utilityExpense}" id="utilityExpense" required>
+</p>
+    <label for="otherExpense">Інші витрати:______</label>
+    <input type="text" th:field="*{otherExpense}" id="otherExpense" required>
+</p>
+    <label for="dateExpensePersonal">Дата витрат</label>
+    <input type="date" th:field="*{dateExpensePersonal}" id="dateExpensePersonal" required>
+
+    <label for="expenseType">Тип витрат</label>
+    <select th:field="*{expenseType}" id="expenseType" required>
+        <option value="FOOD">Їжа</option>
+        <option value="UTILITY">Комунальні витрати</option>
+        <option value="OTHER">Інші витрати</option>
+    </select>
+
+    <input type="submit" value="Додати">
+</form>
+
+</body>
+</html>
