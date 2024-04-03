@@ -12,6 +12,8 @@
     <input
       id="id"
       :type="type"
+      :value="value"
+      :disabled="disabled"
       autocomplete="off"
       @input="changeField"
       @change="changeField"
@@ -39,6 +41,10 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     },
     value: {
       type: String,
