@@ -57,10 +57,9 @@ public class PersonalExpensesController {
     }
 
     @GetMapping("/api/sum-expenses-between-date")
-    public ModelAndView getSumExpensesBetweenDate(
+    public Double getSumExpensesBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
-        ModelAndView modelAndView = new ModelAndView("personalExpenses/getSumExpenses");
         double totalExpenses;
 
             if(startDate == null || endDate == null) {
@@ -68,8 +67,6 @@ public class PersonalExpensesController {
         } else {
             totalExpenses = service.getSumExpenses(startDate, endDate);
         }
-        modelAndView.addObject("totalExpenses", totalExpenses);
-
-        return modelAndView;
+        return totalExpenses;
     }
 }

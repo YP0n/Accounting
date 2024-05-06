@@ -180,22 +180,20 @@ export default {
       console.log('updateExpense expense: ', expense, id);
       try {
         this.isLoading = true
-
-        // TODO: Make api for the update expense
-        await axios.put('http://localhost:8080/personal_expenses/api/expenses/{id}', expense)
+        await axios.put(`http://localhost:8080/personal_expenses/api/expenses/${id}`, expense)
         await this.getAllExpenses()
       } finally {
         this.isLoading = false
       }
     },
 
+
     async removeExpense(id) {
       console.log('removeExpense id: ', id);
       try {
         this.isLoading = true
         console.log('Removed expense id: ', id);
-        // TODO: Make api for the delete expense by id
-        await axios.delete('http://localhost:8080/personal_expenses/api/expenses', expenseId)
+        await axios.delete(`http://localhost:8080/personal_expenses/api/expenses/${id}`)
         await this.getAllExpenses()
       } finally {
         this.isLoading = false
