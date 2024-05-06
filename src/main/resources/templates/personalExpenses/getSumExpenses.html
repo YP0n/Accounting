@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Отримати суму витрат</title>
+</head>
+<body>
+<form action="http://localhost:8080/personal_expenses/api/sum-expenses-between-date" method="get">
+    <label>
+        <input type="date" name="startDate" placeholder="Початкова дата">
+    </label>
+    <label>
+        <input type="date" name="endDate" placeholder="Кінцева дата">
+    </label>
+    <label>
+        Оберіть категорію:
+        <select name="expenseType">
+            <option value="FOOD" th:selected="${expenseType == 'FOOD'}">Їжа</option>
+            <option value="UTILITY" th:selected="${expenseType == 'UTILITY'}">Комунальні послуги</option>
+            <option value="OTHER" th:selected="${expenseType == 'OTHER'}">Інше</option>
+        </select>
+    </label>
+    <input type="submit" value="Отримати">
+</form>
+
+<h2>Сума витрат за обраною категорією:</h2>
+<h3 th:text="${'Сума витрат за категорією ' + expenseType + ': ' + totalExpenses}"></h3>
+
+</body>
+</html>

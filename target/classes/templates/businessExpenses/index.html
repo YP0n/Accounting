@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        /* Додаткові стилі для покращення вигляду */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        /* Стилі для редагування витрати */
+        a {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+
+        /* Стилі для кнопки створення нової витрати */
+        .new-expense-btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .new-expense-btn:hover {
+            background-color: #218838;
+        }
+
+    </style>
+</head>
+<body>
+<div th:each="businessExpenses : ${business_expenses}">
+    <p>Дата: <a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getDateExpensesBusiness()}">date</a></p>
+    <p>Витрати на паливо: <a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getFuel()}">fuel</a></p>
+    <p>Витрати на обслуговування авто: <a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getMaintenance()}">maintenance</a></p>
+    <p>Зарплатня Валя<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getSalaryValya()}">Valya</a></p>
+    <p>Зарплатня Іра<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getSalaryIra()}">Ira</a></p>
+    <p>Комуналка<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getUtilityAndWater()}">utility</a></p>
+    <p>Оренда<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getRent()}">rent</a></p>
+    <p>Єдиний податок<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getTaxSingle()}">taxSingle</a></p>
+    <p>ЄСВ<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getTaxPension()}">taxPension</a></p>
+    <p>Витрати на товар поставлений власником<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getOwner()}">owner</a></p>
+    <p>Витрати на товар поставлений постачальниками<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getSuppliers()}">suppliers</a></p>
+</div>
+
+<br/>
+<hr/>
+
+<a href="/business_expenses/newBusinessExpense" class="new-expense-btn">Створити нову бізнес витрату</a>
+
+</body>
+</html>

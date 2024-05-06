@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Додати витрати до бази даних для бізнесу</title>
+    <style>
+        /* Додаткові стилі для покращення вигляду */
+
+        /* Стилі для полів вводу */
+        input[type="text"],
+        input[type="date"] {
+            padding: 8px; /* Відступи від тексту до межі поля */
+            border: 1px solid #ccc; /* Тонка рамка зі світлим відтінком */
+            border-radius: 4px; /* Закруглені кути */
+            box-sizing: border-box; /* Розрахунок розміру поля включаючи падіння і рамку */
+            width: 100%; /* Ширина поля вводу на всю доступну ширину */
+            margin-bottom: 10px; /* Відступ від нижнього краю поля вводу */
+        }
+
+        /* Стилі для фокусу */
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            outline: none; /* Видалення рамки фокуса */
+            border-color: #007bff; /* Зміна кольору рамки під час фокусу */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тінь для підсвічування поля вводу */
+        }
+
+        /* Стилі для обов'язкових полів */
+        input[type="text"][required],
+        input[type="date"][required] {
+            background-color: #f8d7da; /* Фоновий колір для обов'язкових полів */
+        }
+
+        /* Стилі для міток */
+        label {
+            display: block; /* Відображення мітки як блочного елементу */
+            margin-bottom: 5px; /* Відступ від нижнього краю мітки */
+            font-weight: bold; /* Жирний шрифт для міток */
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Стилі для кнопки "Видалити" */
+        input[type="submit"] {
+            background-color: #ff6347;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #2c7729;
+        }
+    </style>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/business_expenses}" th:object="${businessExpenses}">
+    <label for="fuel">Витрати на паливо:</label>
+    <input type="text" id="fuel" th:field="*{fuel}" required>
+    <br/>
+    <label for="maintenance">Витрати на ТО:</label>
+    <input type="text" id="maintenance" th:field="*{maintenance}" required>
+    <br/>
+    <label for="salaryValya">Витрати на зарплатню Валі:</label>
+    <input type="text" id="salaryValya" th:field="*{salaryValya}" required>
+    <br/>
+    <label for="salaryIra">Витрати на зарплатню Ірі:</label>
+    <input type="text" id="salaryIra" th:field="*{salaryIra}" required>
+    <br/>
+    <label for="utilityAndWater">Витрати на комуналку та воду:</label>
+    <input type="text" id="utilityAndWater" th:field="*{utilityAndWater}" required>
+    <br/>
+    <label for="rent">Витрати на оренду:</label>
+    <input type="text" id="rent" th:field="*{rent}" required>
+    <br/>
+    <label for="taxSingle">Єдиний податок:</label>
+    <input type="text" id="taxSingle" th:field="*{taxSingle}" required>
+    <br/>
+    <label for="taxPension">ЄСВ:</label>
+    <input type="text" id="taxPension" th:field="*{taxPension}" required>
+    <br/>
+    <label for="owner">Доставка товарів господарем:</label>
+    <input type="text" id="owner" th:field="*{owner}" required>
+    <br/>
+    <label for="suppliers">Доставка товарів постачальниками:</label>
+    <input type="text" id="suppliers" th:field="*{suppliers}" required>
+    <br/>
+    <label for="dateExpensesBusiness">Дата витрат</label>
+    <input type="date" id="dateExpensesBusiness" th:field="*{dateExpensesBusiness}" required>
+
+    <input type="submit" value="Додати">
+</form>
+
+</body>
+</html>

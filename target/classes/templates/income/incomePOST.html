@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Додати дохід до бази даних</title>
+  <style>
+    /* Додаткові стилі для покращення вигляду */
+
+    /* Стилі для полів вводу */
+    input[type="text"],
+    input[type="date"] {
+      padding: 8px; /* Відступи від тексту до межі поля */
+      border: 1px solid #ccc; /* Тонка рамка зі світлим відтінком */
+      border-radius: 4px; /* Закруглені кути */
+      box-sizing: border-box; /* Розрахунок розміру поля включаючи падіння і рамку */
+      width: 100%; /* Ширина поля вводу на всю доступну ширину */
+      margin-bottom: 10px; /* Відступ від нижнього краю поля вводу */
+    }
+
+    /* Стилі для фокусу */
+    input[type="text"]:focus,
+    input[type="date"]:focus {
+      outline: none; /* Видалення рамки фокуса */
+      border-color: #007bff; /* Зміна кольору рамки під час фокусу */
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тінь для підсвічування поля вводу */
+    }
+
+    /* Стилі для обов'язкових полів */
+    input[type="text"][required],
+    input[type="date"][required] {
+      background-color: #f8d7da; /* Фоновий колір для обов'язкових полів */
+    }
+
+    /* Стилі для міток */
+    label {
+      display: block; /* Відображення мітки як блочного елементу */
+      margin-bottom: 5px; /* Відступ від нижнього краю мітки */
+      font-weight: bold; /* Жирний шрифт для міток */
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    /* Стилі для кнопки "Видалити" */
+    input[type="submit"] {
+      background-color: #ff6347;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #2c7729;
+    }
+  </style>
+</head>
+<body>
+
+
+<form th:method="POST" th:action="@{/income_shop}" th:object="${income}">
+  <label for="incomeCash">Дохід готівкою:</label>
+  <input type="text" id="incomeCash" th:field="*{incomeCash}" required>
+<br/>
+  <label for="incomeCashless">Безготівковий дохід:</label>
+  <input type="text" id="incomeCashless" th:field="*{incomeCashless}" required>
+  <br/>
+  <label for="incomeOther">Інший дохід:</label>
+  <input type="text" id="incomeOther" th:field="*{incomeOther}" required>
+  <br/>
+  <label for="dateIncome">Дата доходу:</label>
+  <input type="date" id="dateIncome" th:field="*{dateIncome}" required>
+
+  <input type="submit" value="Додати">
+</form>
+
+</body>
+</html>

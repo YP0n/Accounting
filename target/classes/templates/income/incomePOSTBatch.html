@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вибір проміжку дат та доходів</title>
+    <style>
+        /* Додаткові стилі для покращення вигляду */
+
+        /* Стилі для полів вводу */
+        input[type="text"],
+        input[type="date"] {
+            padding: 8px; /* Відступи від тексту до межі поля */
+            border: 1px solid #ccc; /* Тонка рамка зі світлим відтінком */
+            border-radius: 4px; /* Закруглені кути */
+            box-sizing: border-box; /* Розрахунок розміру поля включаючи падіння і рамку */
+            width: 100%; /* Ширина поля вводу на всю доступну ширину */
+            margin-bottom: 10px; /* Відступ від нижнього краю поля вводу */
+        }
+
+        /* Стилі для фокусу */
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            outline: none; /* Видалення рамки фокуса */
+            border-color: #007bff; /* Зміна кольору рамки під час фокусу */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тінь для підсвічування поля вводу */
+        }
+
+        /* Стилі для обов'язкових полів */
+        input[type="text"][required],
+        input[type="date"][required] {
+            background-color: #f8d7da; /* Фоновий колір для обов'язкових полів */
+        }
+
+        /* Стилі для міток */
+        label {
+            display: block; /* Відображення мітки як блочного елементу */
+            margin-bottom: 5px; /* Відступ від нижнього краю мітки */
+            font-weight: bold; /* Жирний шрифт для міток */
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Стилі для кнопки "Видалити" */
+        button {
+            background-color: #22a638;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #034f43;
+        }
+    </style>
+</head>
+<body>
+<h1>Виберіть проміжок дат та введіть дохід</h1>
+<form action="/batch_income_update/process_batch" method="post" th:object="${batchForm}">
+    <div>
+        <label for="startDate">Початкова дата:</label>
+        <input type="date" id="startDate" name="startDate" th:field="*{startDate}" required>
+    </div>
+    <div>
+        <label for="endDate">Кінцева дата:</label>
+        <input type="date" id="endDate" name="endDate" th:field="*{endDate}" required>
+    </div>
+    <button type="submit">Показати дати та введення доходів</button>
+    </form>
+
+    <form action="/batch_income_update/add_income" method="post" th:object="${batchForm}">
+        <ul>
+            <li th:each="income, iterStat : *{incomeShopList}">
+                <label for="dateIncome" th:text="${income.dateIncome}"></label>
+                <input type="hidden" id="dateIncome"
+                       th:field="*{incomeShopList[__${iterStat.index}__].dateIncome}"
+                       th:value="${income.dateIncome}">
+                <label for="incomeCash">"Готівка"</label>
+                <input type="number" id="incomeCash" th:field="*{incomeShopList[__${iterStat.index}__].incomeCash}"
+                       placeholder="Введіть дохід готівковий">
+                <label for="incomeCashless">Безготівка</label>
+                <input type="number" id="incomeCashless" th:field="*{incomeShopList[__${iterStat.index}__].incomeCashless}"
+                       placeholder="Введіть дохід ,безготівковий">
+                <label for="incomeOther">Інший дохід</label>
+                <input type="number" id="incomeOther" th:field="*{incomeShopList[__${iterStat.index}__].incomeOther}"
+                       placeholder="Інший дохід">
+            </li>
+        </ul>
+        <button type="submit">Зберегти доходи</button>
+
+    </form>
+
+</body>
+</html>

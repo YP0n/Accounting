@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ua" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /* Додаткові стилі для покращення вигляду */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Стилі для кнопки "Видалити" */
+        input[type="submit"] {
+            background-color: #ff6347;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #d9534f;
+        }
+        /* Стилі для редагування витрати */
+        a {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Дата</label>
+<p th:text="${incomeShop.getDateIncome()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Готівка</label>
+<p th:text="${incomeShop.getIncomeCash()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Безготівка</label>
+<p th:text="${incomeShop.getIncomeCashless()}">VALUE</p>
+
+<label>ID</label>
+<p th:text="${incomeShop.getId()}">VALUE</p>
+
+<label>Інший дохід</label>
+<p th:text="${incomeShop.getIncomeOther()}">VALUE</p>
+
+<a th:href="@{/income_shop/{id}/edit(id=${incomeShop.getId()})}">Редагувати</a>
+
+<form th:method="POST" th:action="@{/income_shop/{id}(id=${incomeShop.getId()})}">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="submit" value="Видалити">
+</form>
+
+</body>
+</html>

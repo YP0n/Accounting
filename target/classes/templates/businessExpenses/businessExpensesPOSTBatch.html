@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вибір проміжку дат та витрат</title>
+    <style>
+        /* Додаткові стилі для покращення вигляду */
+
+        /* Стилі для полів вводу */
+        input[type="text"],
+        input[type="date"] {
+            padding: 8px; /* Відступи від тексту до межі поля */
+            border: 1px solid #ccc; /* Тонка рамка зі світлим відтінком */
+            border-radius: 4px; /* Закруглені кути */
+            box-sizing: border-box; /* Розрахунок розміру поля включаючи падіння і рамку */
+            width: 100%; /* Ширина поля вводу на всю доступну ширину */
+            margin-bottom: 10px; /* Відступ від нижнього краю поля вводу */
+        }
+
+        /* Стилі для фокусу */
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            outline: none; /* Видалення рамки фокуса */
+            border-color: #007bff; /* Зміна кольору рамки під час фокусу */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тінь для підсвічування поля вводу */
+        }
+
+        /* Стилі для обов'язкових полів */
+        input[type="text"][required],
+        input[type="date"][required] {
+            background-color: #f8d7da; /* Фоновий колір для обов'язкових полів */
+        }
+
+        /* Стилі для міток */
+        label {
+            display: block; /* Відображення мітки як блочного елементу */
+            margin-bottom: 5px; /* Відступ від нижнього краю мітки */
+            font-weight: bold; /* Жирний шрифт для міток */
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Стилі для кнопки "Видалити" */
+        button {
+            background-color: #22a638;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #034f43;
+        }
+    </style>
+</head>
+<body>
+<h1>Виберіть проміжок дат та введіть витрати</h1>
+<form action="/batch_business_update/process_batch" method="post" th:object="${batchForm}">
+    <div>
+        <label for="startDate">Початкова дата:</label>
+        <input type="date" id="startDate" name="startDate" th:field="*{startDate}" required>
+    </div>
+    <div>
+        <label for="endDate">Кінцева дата:</label>
+        <input type="date" id="endDate" name="endDate" th:field="*{endDate}" required>
+    </div>
+    <button type="submit">Показати дати та введення витрат</button>
+</form>
+
+<form action="/batch_business_update/add_expenses" method="post" th:object="${batchForm}">
+    <ul>
+        <li th:each="expense, iterStat : *{expensesBusinessList}">
+            <label for="dateExpensesBusiness" th:text="${expense.dateExpensesBusiness}"></label>
+            <input type="hidden" id="dateExpensesBusiness"
+                   th:field="*{expensesBusinessList[__${iterStat.index}__].dateExpensesBusiness}"
+                   th:value="${expense.dateExpensesBusiness}">
+            <label for="fuel">"Паливо"</label>
+            <input type="number" id="fuel" th:field="*{expensesBusinessList[__${iterStat.index}__].fuel}"
+                   placeholder="Введіть витрати на паливо">
+            <label for="maintenance">ТО</label>
+            <input type="number" id="maintenance" th:field="*{expensesBusinessList[__${iterStat.index}__].maintenance}"
+                   placeholder="Введіть витрати на обслуговування авто">
+            <label for="salaryValya">Валя</label>
+            <input type="number" id="salaryValya" th:field="*{expensesBusinessList[__${iterStat.index}__].salaryValya}"
+                   placeholder="Витрати на зарплатню Валі">
+            <label for="salaryIra">Іра</label>
+            <input type="number" id="salaryIra" th:field="*{expensesBusinessList[__${iterStat.index}__].salaryIra}"
+                   placeholder="Витрати на зарплатню Ірі">
+            <label for="utilityAndWater">Комуналка</label>
+            <input type="number" id="utilityAndWater"
+                   th:field="*{expensesBusinessList[__${iterStat.index}__].utilityAndWater}"
+                   placeholder="Витрати на комуналку">
+            <label for="rent">Оренда</label>
+            <input type="number" id="rent" th:field="*{expensesBusinessList[__${iterStat.index}__].rent}"
+                   placeholder="Витрати на оренду">
+            <label for="taxSingle">Єдиний</label>
+            <input type="number" id="taxSingle" th:field="*{expensesBusinessList[__${iterStat.index}__].taxSingle}"
+                   placeholder="Єдиний податок">
+            <label for="taxPension">ЄСВ</label>
+            <input type="number" id="taxPension" th:field="*{expensesBusinessList[__${iterStat.index}__].taxPension}"
+                   placeholder="ЄСВ">
+            <label for="owner">Власник</label>
+            <input type="number" id="owner" th:field="*{expensesBusinessList[__${iterStat.index}__].owner}"
+                   placeholder="Витати на постачання товарів власником">
+            <label for="suppliers">Постачальники</label>
+            <input type="number" id="suppliers" th:field="*{expensesBusinessList[__${iterStat.index}__].suppliers}"
+                   placeholder="Витрати на покупку товарів у постачальників">
+        </li>
+    </ul>
+    <button type="submit">Зберегти витрати</button>
+</form>
+</body>
+</html>

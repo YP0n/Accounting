@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Оновлення витрат</title>
+    <style>
+        /* Додаткові стилі для покращення вигляду */
+
+        /* Стилі для полів вводу */
+        input[type="text"],
+        input[type="date"] {
+            padding: 8px; /* Відступи від тексту до межі поля */
+            border: 1px solid #ccc; /* Тонка рамка зі світлим відтінком */
+            border-radius: 4px; /* Закруглені кути */
+            box-sizing: border-box; /* Розрахунок розміру поля включаючи падіння і рамку */
+            width: 100%; /* Ширина поля вводу на всю доступну ширину */
+            margin-bottom: 10px; /* Відступ від нижнього краю поля вводу */
+        }
+
+        /* Стилі для фокусу */
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            outline: none; /* Видалення рамки фокуса */
+            border-color: #007bff; /* Зміна кольору рамки під час фокусу */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тінь для підсвічування поля вводу */
+        }
+
+        /* Стилі для обов'язкових полів */
+        input[type="text"][required],
+        input[type="date"][required] {
+            background-color: #f8d7da; /* Фоновий колір для обов'язкових полів */
+        }
+
+        /* Стилі для міток */
+        label {
+            display: block; /* Відображення мітки як блочного елементу */
+            margin-bottom: 5px; /* Відступ від нижнього краю мітки */
+            font-weight: bold; /* Жирний шрифт для міток */
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Стилі для кнопки "Видалити" */
+        input[type="submit"] {
+            background-color: #4760ff;
+            color: #e8bc0b;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #4760ff;
+        }
+        /* Стилі для редагування витрати */
+        a {
+            display: inline-block;
+            background-color: #007bff;
+            color: #e8bc0b;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<form th:method="POST" th:action="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:object="${businessExpenses}">
+    <input type="hidden" name="_method" value="PATCH"/>
+    <label for="dateExpensesBusiness"></label>
+    <input type="date" th:field="*{dateExpensesBusiness}" id="dateExpensesBusiness"/>
+    <br/>
+    <label for="fuel">Паливо</label>
+    <input type="text" th:field="*{fuel}" id="fuel"/>
+    <br/>
+    <label for="maintenance">ТО</label>
+    <input type="text" th:field="*{maintenance}" id="maintenance"/>
+    <br/>
+    <label for="salaryValya">Валя</label>
+    <input type="text" th:field="*{salaryValya}" id="salaryValya"/>
+    <br/>
+    <label for="salaryIra">Іра</label>
+    <input type="text" th:field="*{salaryIra}" id="salaryIra"/>
+    <br/>
+    <label for="utilityAndWater">Комуналка</label>
+    <input type="text" th:field="*{utilityAndWater}" id="utilityAndWater"/>
+    <br/>
+    <label for="rent">Оренда</label>
+    <input type="text" th:field="*{rent}" id="rent"/>
+    <br/>
+    <label for="taxSingle">Єдиний податок</label>
+    <input type="text" th:field="*{taxSingle}" id="taxSingle"/>
+    <br/>
+    <label for="taxPension">ЄСВ</label>
+    <input type="text" th:field="*{taxPension}" id="taxPension"/>
+    <br/>
+    <label for="owner">Власник</label>
+    <input type="text" th:field="*{owner}" id="owner"/>
+    <br/>
+    <label for="suppliers">Постачальники</label>
+    <input type="text" th:field="*{suppliers}" id="suppliers"/>
+    <br/>
+    <input type="submit" value="Оновити">
+</form>
+</body>
+</html>

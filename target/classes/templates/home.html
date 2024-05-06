@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" lang="uk">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h1>Welcome!</h1>
+<div>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+    </form>
+</div>
+<h2>Has input role for user</h2>
+</body>
+</html>
