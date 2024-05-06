@@ -111,7 +111,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../css/variables.scss";
+@import "../css/variables";
 
 .custom-drop {
   margin: 0 0 20px;

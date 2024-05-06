@@ -48,64 +48,64 @@
     </div>
     <div class="column" v-if="hasExpenses">
       <h2>Список витрат</h2>
-      <table class="data-table">
-        <thead>
-          <tr>
-            <th>Їжа</th>
-            <th>Комунальні</th>
-            <th>Інші</th>
-            <th>Дата</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-              v-for="expense in expenses"
-              :key="expense.id"
-              :class="{ 'not-editable': !checkIsEditingExpense(expense.id) }"
-          >
-            <td>
-              {{ !checkIsEditingExpense(expense.id) }}
-              <custom-input
-                :id="`${expense.id}-${expense.foodExpense}`"
-                :value="expense.foodExpense"
-                @change-field="changeExpenseField"
-              />
-            </td>
-            <td>
-              <custom-input
-                :id="`${expense.id}-${expense.utilityExpense}`"
-                :value="expense.utilityExpense"
-                @change-field="changeExpenseField"
-              />
-            </td>
-            <td>
-              <custom-input
-                :id="`${expense.id}-${expense.otherExpense}`"
-                :value="expense.otherExpense"
-                @change-field="changeExpenseField"
-              />
-            </td>
-            <td>
-              <custom-input
-                :id="`${expense.id}-${expense.dateExpensePersonal}`"
-                :value="expense.dateExpensePersonal"
-                type="date"
-                @change-field="changeExpenseField"
-              />
-            </td>
-            <td>
-              <action-buttons
-                :is-editing="checkIsEditingExpense(expense.id)"
-                @set-editing="setIsEditingExpense(expense.id)"
-                @cancel-editing="setIsEditingExpense('')"
-                @remove="removeExpense(expense.id)"
-                @save="updateExpense(expense.id)"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<!--      <table class="data-table">-->
+<!--        <thead>-->
+<!--          <tr>-->
+<!--            <th>Їжа</th>-->
+<!--            <th>Комунальні</th>-->
+<!--            <th>Інші</th>-->
+<!--            <th>Дата</th>-->
+<!--            <th></th>-->
+<!--          </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--          <tr-->
+<!--              v-for="expense in expenses"-->
+<!--              :key="expense.id"-->
+<!--              :class="{ 'not-editable': !checkIsEditingExpense(expense.id) }"-->
+<!--          >-->
+<!--            <td>-->
+<!--              {{ !checkIsEditingExpense(expense.id) }}-->
+<!--              <custom-input-->
+<!--                :id="`${expense.id}-${expense.foodExpense}`"-->
+<!--                :value="expense.foodExpense"-->
+<!--                @change-field="changeExpenseField()"-->
+<!--              />-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <custom-input-->
+<!--                :id="`${expense.id}-${expense.utilityExpense}`"-->
+<!--                :value="expense.utilityExpense"-->
+<!--                @change-field="changeExpenseField"-->
+<!--              />-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <custom-input-->
+<!--                :id="`${expense.id}-${expense.otherExpense}`"-->
+<!--                :value="expense.otherExpense"-->
+<!--                @change-field="changeExpenseField"-->
+<!--              />-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <custom-input-->
+<!--                :id="`${expense.id}-${expense.dateExpensePersonal}`"-->
+<!--                :value="expense.dateExpensePersonal"-->
+<!--                type="date"-->
+<!--                @change-field="changeExpenseField"-->
+<!--              />-->
+<!--            </td>-->
+<!--            <td>-->
+<!--              <action-buttons-->
+<!--                :is-editing="checkIsEditingExpense(expense.id)"-->
+<!--                @set-editing="setIsEditingExpense(expense.id)"-->
+<!--                @cancel-editing="setIsEditingExpense('')"-->
+<!--                @remove="removeExpense(expense.id)"-->
+<!--                @save="updateExpense(expense.id)"-->
+<!--              />-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
       <spending-table
         :expenses="expenses"
         @update-expense="updateExpense"
@@ -123,18 +123,18 @@
 import axios from 'axios'
 
 import CustomInput from '@/components/CustomInput'
-import ActionButtons from '@/components/ActionButtons'
+// import ActionButtons from '@/components/ActionButtons'
 import SpendingTable from './SpendingTable'
 import MainLoader from '@/components/MainLoader'
 
-//import { hardcodedExpenses } from '../../../hardcodedData'
+import { hardcodedExpenses } from '../../../hardcodedData'
 
 export default {
   name: 'SpendingPage',
 
   components: {
     CustomInput,
-    ActionButtons,
+    // ActionButtons,
     SpendingTable,
     MainLoader
   },
@@ -145,6 +145,7 @@ export default {
       utilityExpense: '',
       otherExpense: '',
       dateExpensePersonal: '',
+      expenseType: {},
       expenses: [], //Масив для збереження списку витрат
       editingExpenseId: '',
       errors: {},
@@ -166,14 +167,14 @@ export default {
   },
 
   methods: {
-    setIsEditingExpense(id) {
-      console.log('setIsEditingExpense: ', id);
-      this.editingExpenseId = id
-    },
-
-    checkIsEditingExpense(id) {
-      return this.editingExpenseId === id
-    },
+    // setIsEditingExpense(id) {
+    //   console.log('setIsEditingExpense: ', id);
+    //   this.editingExpenseId = id
+    // },
+    //
+    // checkIsEditingExpense(id) {
+    //   return this.editingExpenseId === id
+    // },
 
     async updateExpense(expense) {
       console.log('updateExpense expense: ', expense);
@@ -202,14 +203,14 @@ export default {
     },
 
     async getAllExpenses() {
-      console.log('getAllExpenses'/*, hardcodedExpenses*/);
+      console.log('getAllExpenses', hardcodedExpenses);
       try {
         this.isLoading = true
 
-        const response = await axios.get('http://localhost:8080/personal_expenses/api/expenses')
+        // const response = await axios.get('/personal_expenses/api/expenses')
 
-        this.expenses = response.data;
-        //this.expenses = hardcodedExpenses;
+        // this.expenses = response.data;
+        this.expenses = hardcodedExpenses;
         console.log('Список витрат успішно отриманий:', this.expenses);
       } catch(error) {
         console.error('Помилка при отриманні списку витрат:', error);
@@ -220,10 +221,6 @@ export default {
 
     changeField({ fieldName, value }) {
       this[fieldName] = value
-    },
-
-    changeExpenseField({fieldName, value}) {
-      this[fieldName] = value;
     },
 
     validateDate() {
@@ -254,14 +251,15 @@ export default {
       try {
         this.isLoading = true
 
-        await axios.post('localhost:8080/personal_expenses/api/expenses', {
+        await axios.post('/personal_expenses/api/expenses', {
           foodExpense: this.foodExpense,
           utilityExpense: this.utilityExpense,
           otherExpense: this.otherExpense,
           dateExpensePersonal: this.dateExpensePersonal,
+          expenseType: this.expenseType.value
         })
 
-        await this.getAllExpenses()
+        this.getAllExpenses()
       } catch (error) {
         console.error('Помилка при додаванні витрати:', error);
       } finally {

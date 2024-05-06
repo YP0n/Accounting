@@ -10,7 +10,7 @@ body {
   color: $main;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #fff;
+  background: $substrate;
   -webkit-overflow-scrolling: touch;
   -webkit-text-size-adjust: 100%;
 }
@@ -41,6 +41,7 @@ h2 {
 
 #app {
   min-height: 100%;
+  position: relative;
 }
 
 .button {
@@ -71,11 +72,6 @@ h2 {
   font-size: 12px;
   font-style: italic;
   color: $error;
-}
-
-.divider {
-  margin: 0 0 20px;
-  color: $main;
 }
 
 .disabled {

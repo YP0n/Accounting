@@ -12,6 +12,8 @@
     <input
       id="id"
       :type="type"
+      :value="value"
+      :disabled="disabled"
       autocomplete="off"
       @input="changeField"
       @change="changeField"
@@ -40,6 +42,10 @@ export default {
       type: String,
       default: 'text'
     },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     value: {
       type: String,
       default: ''
@@ -66,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../css/variables.scss";
+@import "../css/variables";
 
 .custom-input {
   padding: 0 0 20px;
