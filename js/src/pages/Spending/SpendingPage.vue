@@ -176,13 +176,13 @@ export default {
     //   return this.editingExpenseId === id
     // },
 
-    async updateExpense(expense) {
-      console.log('updateExpense expense: ', expense);
+    async updateExpense(id, expense) {
+      console.log('updateExpense expense: ', expense, id);
       try {
         this.isLoading = true
 
         // TODO: Make api for the update expense
-        await axios.put('/personal_expenses/api/expenses', expense)
+        await axios.put('http://localhost:8080/personal_expenses/api/expenses/{id}', expense)
         await this.getAllExpenses()
       } finally {
         this.isLoading = false
@@ -195,7 +195,7 @@ export default {
         this.isLoading = true
         console.log('Removed expense id: ', id);
         // TODO: Make api for the delete expense by id
-        await axios.delete('/personal_expenses/api/expenses', expenseId)
+        await axios.delete('http://localhost:8080/personal_expenses/api/expenses', expenseId)
         await this.getAllExpenses()
       } finally {
         this.isLoading = false
