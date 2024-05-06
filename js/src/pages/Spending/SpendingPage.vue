@@ -182,7 +182,7 @@ export default {
         this.isLoading = true
 
         // TODO: Make api for the update expense
-        // await axios.put('/personal_expenses/api/expenses', expense)
+        await axios.put('/personal_expenses/api/expenses', expense)
         await this.getAllExpenses()
       } finally {
         this.isLoading = false
@@ -195,7 +195,7 @@ export default {
         this.isLoading = true
         console.log('Removed expense id: ', id);
         // TODO: Make api for the delete expense by id
-        // await axios.delete('/personal_expenses/api/expenses', expenseId)
+        await axios.delete('/personal_expenses/api/expenses', expenseId)
         await this.getAllExpenses()
       } finally {
         this.isLoading = false
@@ -207,10 +207,10 @@ export default {
       try {
         this.isLoading = true
 
-        // const response = await axios.get('/personal_expenses/api/expenses')
+        const response = await axios.get('http://localhost:8080/personal_expenses/api/expenses')
 
-        // this.expenses = response.data;
-        this.expenses = hardcodedExpenses;
+        this.expenses = response.data;
+        // this.expenses = hardcodedExpenses;
         console.log('Список витрат успішно отриманий:', this.expenses);
       } catch(error) {
         console.error('Помилка при отриманні списку витрат:', error);
@@ -251,7 +251,7 @@ export default {
       try {
         this.isLoading = true
 
-        await axios.post('/personal_expenses/api/expenses', {
+        await axios.post('http://localhost:8080/personal_expenses/api/expenses', {
           foodExpense: this.foodExpense,
           utilityExpense: this.utilityExpense,
           otherExpense: this.otherExpense,
@@ -259,7 +259,7 @@ export default {
           expenseType: this.expenseType.value
         })
 
-        this.getAllExpenses()
+        await this.getAllExpenses()
       } catch (error) {
         console.error('Помилка при додаванні витрати:', error);
       } finally {
