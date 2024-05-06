@@ -33,15 +33,5 @@ public class PersonalExpenses {
     @Column(name = "other_expense")
     private double otherExpense;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "expense_type")
-    private ExpenseType expenseType;
-
-    public double getAmount(ExpenseType expenseType) {
-        return switch (expenseType) {
-            case FOOD -> foodExpense;
-            case UTILITY -> utilityExpense;
-            case OTHER -> otherExpense;
-        };
     }
-}
+

@@ -69,12 +69,12 @@ public class PersonalExpenseService {
         return sum;
     }
 
-    public double getSumExpenses(LocalDate startDate, LocalDate endDate, ExpenseType expenseType) {
+    public double getSumExpenses(LocalDate startDate, LocalDate endDate) {
         List<PersonalExpenses> expenses = personalExpensesRepository.findAllByDateExpensePersonalBetween(startDate, endDate);
 
         double sum = 0.0;
         for(PersonalExpenses expense : expenses) {
-                sum += expense.getAmount(expenseType);
+                sum += expense.getFoodExpense();
         }
         return sum;
     }

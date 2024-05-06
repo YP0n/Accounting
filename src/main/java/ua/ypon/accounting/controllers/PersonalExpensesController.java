@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("personal_expenses")
 public class PersonalExpensesController {
 
-    private static Logger log = LoggerFactory.getLogger(PersonalExpenses.class);
+    private static final Logger log = LoggerFactory.getLogger(PersonalExpenses.class);
 
     private final PersonalExpenseService service;
 
@@ -59,30 +59,14 @@ public class PersonalExpensesController {
     @GetMapping("/api/sum-expenses-between-date")
     public ModelAndView getSumExpensesBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
-            @RequestParam(required = false) LocalDate endDate,
-            @RequestParam(required = false)String expenseType) {
+            @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("personalExpenses/getSumExpenses");
         double totalExpenses;
-        ExpenseType expenseTypeEnum = null;
-
-        // Перевірка на null або порожній рядок для expenseType
-        if (expenseType != null && !expenseType.isEmpty()) {
-            try {
-                // Якщо expenseType вказано, конвертуємо його в Enum
-                expenseTypeEnum = ExpenseType.valueOf(expenseType);
-            }catch (IllegalArgumentException e) {
-                e.printStackTrace();
-                // Обробка випадку, коли значення expenseType не відповідає жодному елементу Enum
-            }
-        }
 
             if(startDate == null || endDate == null) {
-            totalExpenses = service.getSumExpenses(LocalDate.now(), LocalDate.now(), expenseTypeEnum);
+            totalExpenses = service.getSumExpenses(LocalDate.now(), LocalDate.now());
         } else {
-            totalExpenses = service.getSumExpenses(startDate, endDate, expenseTypeEnum);
-        }
-        if (expenseType != null && !expenseType.isEmpty()) {
-            modelAndView.addObject("expenseType", expenseType);
+            totalExpenses = service.getSumExpenses(startDate, endDate);
         }
         modelAndView.addObject("totalExpenses", totalExpenses);
 

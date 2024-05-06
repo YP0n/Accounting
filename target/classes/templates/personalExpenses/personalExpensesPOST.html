@@ -1,77 +1,64 @@
 <!DOCTYPE html>
-<html lang="uk" xmlns:th="http://thymeleaf.org">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <title>Додати витрати до бази даних</title>
-    <style>
-        /* Додаткові стилі для покращення вигляду */
-
-        /* Стилі для полів вводу */
-        input[type="text"],
-        input[type="date"] {
-            padding: 8px; /* Відступи від тексту до межі поля */
-            border: 1px solid #ccc; /* Тонка рамка зі світлим відтінком */
-            border-radius: 4px; /* Закруглені кути */
-            box-sizing: border-box; /* Розрахунок розміру поля включаючи падіння і рамку */
-            width: 100%; /* Ширина поля вводу на всю доступну ширину */
-            margin-bottom: 10px; /* Відступ від нижнього краю поля вводу */
-        }
-
-        /* Стилі для фокусу */
-        input[type="text"]:focus,
-        input[type="date"]:focus {
-            outline: none; /* Видалення рамки фокуса */
-            border-color: #007bff; /* Зміна кольору рамки під час фокусу */
-            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Тінь для підсвічування поля вводу */
-        }
-
-        /* Стилі для обов'язкових полів */
-        input[type="text"][required],
-        input[type="date"][required] {
-            background-color: #f8d7da; /* Фоновий колір для обов'язкових полів */
-        }
-
-        /* Стилі для міток */
-        label {
-            display: block; /* Відображення мітки як блочного елементу */
-            margin-bottom: 5px; /* Відступ від нижнього краю мітки */
-            font-weight: bold; /* Жирний шрифт для міток */
-        }
-
-
-        body {
-            font-family: Arial, sans-serif;
-        }
-
-        /* Стилі для кнопки "Видалити" */
-        input[type="submit"] {
-            background-color: #ff6347;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #2c7729;
-        }
-    </style>
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/personal_expenses}" th:object="${personalExpenses}">
-    <label for="foodExpense">Їжа:</label>
-    <input type="text" th:field="*{foodExpense}" id="foodExpense" required>
-<br/>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('personalExpensesForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const expenseType = document.getElementById('expenseType').value;
+            const dateExpensePersonal = document.getElementById('dateExpensePersonal').value;
+
+            const serverDate = dateExpensePersonal;
+            const formData = new FormData();
+
+            formData.append('expenseType', expenseType);
+            formData.append('dateExpensePersonal', dateExpensePersonal);
+
+            document.querySelectorAll('input[type="text"]').forEach(input => {
+            formData.append(input.name, input.value);
+            });
+
+            formData.append('expenseType', document.getElementById('expenseType').value);
+
+            fetch('http://localhost:8080/personal_expenses/api/expenses', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            })
+                .then(response => response.json())
+                .then(data => console.log('Success:', data))
+                .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+
+<form id="personalExpensesForm" accept-charset="UTF-8">
+    <label for="foodExpense">Їжа:______________</label>
+    <input type="text" id="foodExpense" name="foodExpense" required>
+</p>
     <label for="utilityExpense">Комунальні витрати:</label>
-    <input type="text" th:field="*{utilityExpense}" id="utilityExpense" required>
-<br/>
-    <label for="otherExpense">Інші витрати:</label>
-    <input type="text" th:field="*{otherExpense}" id="otherExpense" required>
-<br/>
+    <input type="text" id="utilityExpense" name="utilityExpense" required>
+</p>
+    <label for="otherExpense">Інші витрати:______</label>
+    <input type="text" id="otherExpense" name="otherExpense" required>
+</p>
     <label for="dateExpensePersonal">Дата витрат</label>
-    <input type="date" th:field="*{dateExpensePersonal}" id="dateExpensePersonal" required>
+    <input type="date" id="dateExpensePersonal" name="dateExpensePersonal" required>
+
+    <label for="expenseType">Тип витрат</label>
+    <select id="expenseType" name="expenseType" required>
+        <option value="FOOD">Їжа</option>
+        <option value="UTILITY">Комунальні витрати</option>
+        <option value="OTHER">Інші витрати</option>
+    </select>
 
     <input type="submit" value="Додати">
 </form>
