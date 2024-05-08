@@ -36,7 +36,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
                         .loginProcessingUrl("/process_login")
-                        .defaultSuccessUrl("/hello", true)
+                        .defaultSuccessUrl("/index", true)
                         .failureUrl("/login?error"))
                 .rememberMe(rememberMe -> rememberMe.userDetailsService(userDetailsService()))
                 .logout(logout -> logout.logoutUrl("/logout")

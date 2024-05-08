@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Домашня сторінка</title>
+  <style>
+    /* Стилізація посилань */
+    .link-group {
+      margin-bottom: 20px;
+    }
+    .link-group a {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .link-group a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<h1>Вітаємо на домашній сторінці</h1>
+
+<!-- Група посилань на витрати -->
+<div class="link-group">
+  <h2>Витрати</h2>
+  <a href="/personal_expenses/show">Таблиця з витратами</a>
+  <br/>
+  <a href="/personal_expenses/new">Додавання нової витрати</a>
+  <br/>
+  <a href="/batch_update/new_batch">Пакетне додавання витрат за вибраний період</a>
+  <br/>
+  <a href="/food_expenses/api/sum_food_expenses">Витрати на їжу загальні</a>
+  <br/>
+  <a href="/food_expenses/api/sum_expenses_food_between_date">Витрати на їжу за період</a>
+  <br/>
+  <a href="/utility_expenses/api/sum-utility-expenses">Витрати на комуналку загальні</a>
+  <br/>
+  <a href="/utility_expenses/api/sum_expenses_utility_between_date">Витрати на комуналку за період</a>
+  <br/>
+  <a href="/other_expenses/api/sum-other-expenses">Витрати інші загальні</a>
+  <br/>
+  <a href="/other_expenses/api/sum_expenses_other_between_date">Витрати інші за період</a>
+  <br/>
+  <a href="/personal_expenses">Редагування витрат</a>
+</div>
+
+<!-- Група посилань на бізнес витрати -->
+<div class="link-group">
+  <h2>Бізнес витрати</h2>
+  <a href="/business_expenses/show">Таблиця бізнес витрат</a>
+  <br/>
+  <a href="/owner_purchasing/api/total_sum_purchasing_owner">Витрати на товар загальні доставлені власником</a>
+  <br/>
+  <a href="/owner_purchasing/api/sum_expenses_purchasing_owner_between_date">Витрати доставлені власником за вибраний період</a>
+  <br/>
+  <a href="/suppliers_purchasing/api/total_sum_purchasing_suppliers">Витрати загальні на товар постачальників</a>
+  <br/>
+  <a href="/suppliers_purchasing/api/sum_expenses_purchasing_suppliers_between_date">Витрати на товар постачальників за вибраний період</a>
+  <br/>
+  <a href="/batch_business_update/new_batch">Пакетне додавання бізнес витрат за вибраний період</a>
+  <br/>
+  <a href="/business_expenses/newBusinessExpense">Додавання бізнес витрат</a>
+  <br/>
+  <a href="/car_expenses/api/total_sum_fuel">Витрати на паливо загальні</a>
+  <br/>
+  <a href="/car_expenses/api/total_sum_maintenance">Витрати на обслуговування авто загальні</a>
+  <br/>
+  <a href="/car_expenses/api/sum_expenses_fuel_between_date">Витрати на паливо за вибраний період</a>
+  <br/>
+  <a href="/car_expenses/api/sum_expenses_maintenance_between_date">Витрати на обслуговування авто за вибраний період</a>
+  <br/>
+  <a href="/operation_expenses/api/total_sum_salary_v">Витрати на зарплатню для V загальні</a>
+  <br/>
+  <a href="/operation_expenses/api/total_sum_salary_i">Витрати на зарплатню для I загальні</a>
+  <br/>
+  <a href="/operation_expenses/api/total_sum_utility">Витрати на бізнес комуналку загальні</a>
+  <br/>
+  <a href="/operation_expenses/api/total_sum_rent">Витрати на оренду загальні</a>
+  <br/>
+  <a href="/operation_expenses/api/total_sum_tax_single">Витрати на Єдиний податок загальні</a>
+  <br/>
+  <a href="/operation_expenses/api/total_sum_tax_pension">Витрати на ЄСВ загальні</a>
+  <br/>
+  <a href="/operation_expenses/api/sum_expenses_salary_v_between_date">Витрати на зарплатню для V за вибраний період</a>
+  <br/>
+  <a href="/operation_expenses/api/sum_expenses_salary_i_between_date">Витрати на зарплатню для I за вибраний період</a>
+  <br/>
+  <a href="/operation_expenses/api/sum_expenses_utility_between_date">Витрати на бізнес комуналку за вибраний період</a>
+  <br/>
+  <a href="/operation_expenses/api/sum_expenses_rent_between_date">Витрати на оренду за вибраний період</a>
+  <br/>
+  <a href="/operation_expenses/api/sum_expenses_tax_single_between_date">Витрати на Єдиний податок за вибраний період</a>
+  <br/>
+  <a href="/operation_expenses/api/sum_expenses_tax_pension_between_date">Витрати на ЄСВ за вибраний період</a>
+  <br/>
+  <a href="/business_expenses">Редагування бізнес витрат</a>
+</div>
+
+<!-- Група посилань на доходи -->
+<div class="link-group">
+  <h2>Доходи</h2>
+  <a href="/income_shop/show">Таблиця доходів</a>
+  <br/>
+  <a href="/income_shop/new_income">Додавання доходів</a>
+  <br/>
+  <a href="/batch_income_update/new_batch">Пакетне додавання доходів за вибраний період</a>
+  <br/>
+  <a href="/cash_income/api/total_sum_cash">Готівковий загальний дохід</a>
+  <br/>
+  <a href="/cash_income/api/total_sum_cash_between_date">Готівковий дохід за обраний період</a>
+  <br/>
+  <a href="/cashless_income/api/total_sum_cashless">Безготівковий загальний дохід</a>
+  <br/>
+  <a href="/cashless_income/api/total_sum_cashless_between_date">Безготівковий дохід за обраний період</a>
+  <br/>
+  <a href="/other_income/api/total_sum_other">Інший загальний дохід</a>
+  <br/>
+  <a href="/other_income/api/total_sum_other_between_date">Інший дохід за обраний період</a>
+  <br/>
+  <a href="/income_shop">Редагування доходів</a>
+</div>
+
+<!-- Форма виходу -->
+<form th:action="@{/logout}" th:method="POST">
+  <input type="submit" value="Вийти"/>
+</form>
+</body>
+</html>

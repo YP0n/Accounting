@@ -1,6 +1,7 @@
 package ua.ypon.accounting.services.income;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.IncomeShop;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
  */
 @Service
 @Transactional(readOnly = true)
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class IncomeCashService {
     private final IncomesRepository incomesRepository;
 

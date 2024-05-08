@@ -19,9 +19,9 @@ public class RegistrationController {
     private RegistrationService service;
     private PersonValidator personValidator;
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "hello";
+    @GetMapping("/index")
+    public String index() {
+        return "index";
     }
 
     @GetMapping("/login")
