@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>Login page </title>
+</head>
+<body>
+
+<form action="/process_login" method="post">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+  <div><label>Введіть імʼя користувача: <input type="text" name="username" id="username"/></label></div>
+  <br/>
+  <div><label>Введіть пароль: <input type="password" name="password" id="password"/></label></div>
+  <br/>
+  <div><input type="submit" value="Login"/></div>
+
+  <div th:if="${param.error}" style="color: red">
+    Невірне імʼя або пароль!
+  </div>
+</form>
+
+</body>
+</html>

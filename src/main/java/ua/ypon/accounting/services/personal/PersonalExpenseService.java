@@ -3,8 +3,8 @@ package ua.ypon.accounting.services.personal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.PersonalExpenses;
@@ -18,6 +18,7 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true)
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class PersonalExpenseService {
 
     private final PersonalExpensesRepository personalExpensesRepository;
