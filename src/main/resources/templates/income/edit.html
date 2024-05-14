@@ -73,6 +73,7 @@
 </head>
 <body>
 <form th:method="POST" th:action="@{/income_shop/{id}(id=${incomeShop.getId()})}" th:object="${incomeShop}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <input type="hidden" name="_method" value="PATCH"/>
     <label for="dateIncome"></label>
     <input type="date" th:field="*{dateIncome}" id="dateIncome"/>

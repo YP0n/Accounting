@@ -61,6 +61,7 @@
 <body>
 
 <form th:method="POST" th:action="@{/personal_expenses}" th:object="${personalExpenses}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <label for="foodExpense">Їжа:</label>
     <input type="text" th:field="*{foodExpense}" id="foodExpense" required>
 <br/>

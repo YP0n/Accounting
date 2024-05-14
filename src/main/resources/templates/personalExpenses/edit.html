@@ -73,6 +73,7 @@
 </head>
 <body>
 <form th:method="POST" th:action="@{/personal_expenses/{id}(id=${personalExpenses.getId()})}" th:object="${personalExpenses}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <input type="hidden" name="_method" value="PATCH"/>
     <label for="dateExpensePersonal">Дата</label>
     <input type="date" th:field="*{dateExpensePersonal}" id="dateExpensePersonal"/>

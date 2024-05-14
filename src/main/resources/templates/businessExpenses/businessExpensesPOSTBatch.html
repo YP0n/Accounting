@@ -62,6 +62,7 @@
 <body>
 <h1>Виберіть проміжок дат та введіть витрати</h1>
 <form action="/batch_business_update/process_batch" method="post" th:object="${batchForm}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <div>
         <label for="startDate">Початкова дата:</label>
         <input type="date" id="startDate" name="startDate" th:field="*{startDate}" required>
@@ -74,6 +75,7 @@
 </form>
 
 <form action="/batch_business_update/add_expenses" method="post" th:object="${batchForm}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <ul>
         <li th:each="expense, iterStat : *{expensesBusinessList}">
             <label for="dateExpensesBusiness" th:text="${expense.dateExpensesBusiness}"></label>

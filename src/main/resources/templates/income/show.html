@@ -66,6 +66,7 @@
 <a th:href="@{/income_shop/{id}/edit(id=${incomeShop.getId()})}">Редагувати</a>
 
 <form th:method="POST" th:action="@{/income_shop/{id}(id=${incomeShop.getId()})}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" value="Видалити">
 </form>

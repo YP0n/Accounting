@@ -62,6 +62,7 @@
 
 
 <form th:method="POST" th:action="@{/income_shop}" th:object="${income}">
+  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
   <label for="incomeCash">Дохід готівкою:</label>
   <input type="text" id="incomeCash" th:field="*{incomeCash}" required>
 <br/>

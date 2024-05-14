@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -25,6 +26,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/batch_update")
 @SessionAttributes("batchForm")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class BatchUpdateController {
     private static final Logger log = LoggerFactory.getLogger(BatchUpdateController.class);
 
@@ -37,6 +39,7 @@ public class BatchUpdateController {
 
     @GetMapping("/new_batch")
     public String showBatchForm(Model model) {
+        log.info("Отримано запит на відображення форми нового пакету");
         // Перевірка, чи існують дані форми у сесії
         if (!model.containsAttribute("batchForm")) {
             // Якщо немає, створюємо новий об'єкт форми і додаємо його до моделі
@@ -47,6 +50,9 @@ public class BatchUpdateController {
 
     @PostMapping("/process_batch")
     public String processBatch(@Validated @ModelAttribute("batchForm") BatchForm batchForm, Model model) {
+        log.info("Дані форми перед обробкою: {}", batchForm);
+        log.info("Отримано запит на обробку пакету даних");
+
         LocalDate startDate = batchForm.getStartDate();
         LocalDate endDate = batchForm.getEndDate();
 
@@ -85,6 +91,7 @@ public class BatchUpdateController {
 
     @PostMapping("/add_expenses")
     public ResponseEntity<?> addExpenses(@Validated @ModelAttribute("batchForm") BatchForm batchForm) {
+        log.info("Отримано запит на додавання витрат");
         try {
             List<PersonalExpenses> expensesList = batchForm.getExpensesList();
             log.info("Додавання витрат: " + expensesList.toString());

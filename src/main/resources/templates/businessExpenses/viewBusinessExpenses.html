@@ -89,6 +89,7 @@
         <td th:text="${expense.suppliers}"></td>
         <td>
             <form th:method="POST" th:action="@{/business_expenses/{id}(id=${expense.id})}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit">Видалити</button>
             </form>

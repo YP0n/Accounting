@@ -1,7 +1,6 @@
 package ua.ypon.accounting.services.personal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.PersonalExpenses;
@@ -15,7 +14,6 @@ import java.util.List;
  */
 @Service
 @Transactional(readOnly = true)
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class FoodExpensesService {
 
     private final PersonalExpensesRepository personalExpensesRepository;

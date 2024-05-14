@@ -61,6 +61,7 @@
 <body>
 
 <form th:method="POST" th:action="@{/business_expenses}" th:object="${businessExpenses}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     <label for="fuel">Витрати на паливо:</label>
     <input type="text" id="fuel" th:field="*{fuel}" required>
     <br/>

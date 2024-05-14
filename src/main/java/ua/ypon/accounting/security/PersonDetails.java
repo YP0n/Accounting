@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-
 public class PersonDetails implements UserDetails {
 
     private final Person person;

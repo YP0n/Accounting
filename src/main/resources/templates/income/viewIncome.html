@@ -75,6 +75,7 @@
         <td th:text="${income.incomeOther}"></td>
         <td>
             <form th:method="POST" th:action="@{/income_shop/{id}(id=${income.id})}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit">Видалити</button>
             </form>
