@@ -16,9 +16,7 @@
     >
       {{ selected.text }}
     </span>
-    <span v-if="error" class="error">
-      {{ error }}
-    </span>
+    <error :error="error" />
     <transition name="fade">
       <ul
         v-if="isDropVisible"
@@ -39,9 +37,14 @@
 </template>
 
 <script>
+import Error from '@/components/Error'
 
 export default {
-  name: 'CustomDrop',
+  name: 'CustomSelect',
+
+  components: {
+    Error
+  },
 
   props: {
     id: {
@@ -111,7 +114,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../css/variables.scss";
+@import '@/css/variables';
 
 .custom-drop {
   margin: 0 0 20px;

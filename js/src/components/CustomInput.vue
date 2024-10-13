@@ -13,28 +13,36 @@
       id="id"
       :type="type"
       :value="value"
+      :readonly="readonly"
       :disabled="disabled"
       autocomplete="off"
       @input="changeField"
       @change="changeField"
     />
-    <span v-if="error" class="error">
-      {{ error }}
-    </span>
+    <error :error="error" />
   </div>
 </template>
 
 <script>
+import Error from '@/components/Error'
+
 export default {
   name: 'CustomInput',
+
+  components: {
+    Error
+  },
 
   props: {
     id: {
       type: String,
-      default: '',
-      required: true
+      default: ''
     },
     label: {
+      type: String,
+      default: ''
+    },
+    value: {
       type: String,
       default: ''
     },
@@ -42,13 +50,13 @@ export default {
       type: String,
       default: 'text'
     },
-    disabled: {
+    readonly: {
       type: Boolean,
       default: false
     },
-    value: {
-      type: String,
-      default: ''
+    disabled: {
+      type: Boolean,
+      default: false
     },
     error: {
       type: String,
@@ -61,10 +69,7 @@ export default {
       const value = e.target.value
 
       if(value !== this.value) {
-        this.$emit('change-field', {
-          fieldName: this.id,
-          value
-        })
+        this.$emit('change-field', value)
       }
     }
   }
@@ -72,28 +77,27 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../css/variables.scss";
+@import '@/css/variables';
 
 .custom-input {
   padding: 0 0 20px;
-  overflow: hidden;
-  position: relative;
 
   &.has-error input {
     border-color: $error;
+    background: $error-background;
   }
 
   input {
-    float: left;
     width: 100%;
-    height: 40px;
     padding: 10px;
+    font-size: 14px;
+    line-height: 1.2;
     color: $main;
     outline: none;
     background: $field-background;
     border: solid $main;
     border-width: 0 0 1px;
-    transition: border-color 0.3s, background 0.3s;
+    transition: border-color .3s, background .3s;
 
     &:focus {
       background: $alt-field-background;

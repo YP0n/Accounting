@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import SpendingPage from './pages/Spending/SpendingPage.vue'
+import SpendingPage from './pages/Spending/Spending.vue'
 
 export default {
   name: 'App',

@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../css/variables.scss";
+@import '@/css/variables';
 
 .action-buttons {
   width: 124px;

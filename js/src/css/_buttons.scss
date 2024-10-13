@@ -1,0 +1,22 @@
+@import "./variables.scss";
+
+.button {
+  width: 100%;
+  padding: 11px 20px;
+  font: 900 18px/1.2 Arial, Verdana, sans-serif;
+  color: #fff;
+  text-transform: uppercase;
+  background: $button;
+  transition: background 0.3s;
+  box-shadow: $box-shadow;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: $button-hover;
+  }
+
+  &.disabled:hover {
+    background: $button;
+  }
+}

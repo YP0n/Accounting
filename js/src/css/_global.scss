@@ -44,36 +44,6 @@ h2 {
   position: relative;
 }
 
-.button {
-  width: 100%;
-  padding: 14px 20px;
-  color: #fff;
-  font-weight: 900;
-  text-transform: uppercase;
-  background: $button;
-  transition: background 0.3s;
-  box-shadow: $box-shadow;
-  border: 0;
-  cursor: pointer;
-
-  &:hover {
-    background: $button-hover;
-  }
-
-  &.disabled:hover {
-    background: $button;
-  }
-}
-
-.error {
-  display: block;
-  padding: 0 10px;
-  margin: -12px 0 -14px;
-  font-size: 12px;
-  font-style: italic;
-  color: $error;
-}
-
 .disabled {
   opacity: 0.5;
   cursor: default;
