@@ -1,13 +1,13 @@
 <template>
-  <div class="spending">
+  <div class="expenses">
     <div class="column">
-      <add-spending @add-expense="callAddExpense" />
+      <add-expenses @add-expense="callAddExpense" />
     </div>
     <div class="column">
-      <spending-table
+      <expenses-table
         :dates="[expenseStartDate, expenseEndDate]"
         :expenses="expenses"
-        @change-dates="changeSpendingDates"
+        @change-dates="changeExpensesDates"
         @update-expense="callUpdateExpense"
         @remove-expense="callRemoveExpense"
       />
@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import AddSpending from '@/pages/Spending/_components/AddSpending'
-import SpendingTable from './_components/SpendingTable'
+import AddExpenses from './_components/AddExpenses'
+import ExpensesTable from './_components/ExpensesTable'
 import MainLoader from '@/components/MainLoader'
 
 import { getExpenses, addExpense, updateExpense, removeExpense } from '@/Network.js'
@@ -29,11 +29,11 @@ import { getExpenses, addExpense, updateExpense, removeExpense } from '@/Network
 import { getFormattedDate } from '@/utils'
 
 export default {
-  name: 'Spending',
+  name: 'Expenses',
 
   components: {
-    AddSpending,
-    SpendingTable,
+    AddExpenses,
+    ExpensesTable,
     MainLoader
   },
 
@@ -52,7 +52,7 @@ export default {
   },
 
   methods: {
-    changeSpendingDates({ startDate, endDate }) {
+    changeExpensesDates({ startDate, endDate }) {
       this.expenseStartDate = startDate
       this.expenseEndDate = endDate
 
@@ -95,7 +95,7 @@ export default {
         await updateExpense(expense)
         await this.callGetExpenses()
       } catch (e) {
-
+        console.error(e)
       }
     },
 
@@ -106,7 +106,7 @@ export default {
         await removeExpense(id)
         await this.callGetExpenses()
       } catch (e) {
-
+        console.error(e)
       }
     },
   }
@@ -116,7 +116,7 @@ export default {
 <style lang="scss">
 @import '@/css/variables';
 
-.spending {
+.expenses {
   position: absolute;
   left: 0;
   top: 0;
@@ -148,7 +148,7 @@ export default {
 }
 
 @media (max-width: 1024px) {
-  .spending {
+  .expenses {
     position: static;
 
     &:after {

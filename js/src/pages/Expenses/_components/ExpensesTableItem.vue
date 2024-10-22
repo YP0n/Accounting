@@ -49,7 +49,7 @@ import ActionButtons from '@/components/ActionButtons'
 import { DATE_REGEX } from '@/constants'
 
 export default {
-  name: 'SpendingTableItem',
+  name: 'ExpensesTableItem',
 
   components: {
     DatePicker,

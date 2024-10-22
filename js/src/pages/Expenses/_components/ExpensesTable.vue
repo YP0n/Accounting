@@ -1,9 +1,9 @@
 <template>
-  <div class="spending-table-wrapper">
-    <div class="spending-table-header">
+  <div class="expenses-table-wrapper">
+    <div class="expenses-table-header">
       <h2>Список витрат</h2>
       <date-picker
-        class="spending-table-datepicker"
+        class="expenses-table-datepicker"
         :dates="dates"
         :range="true"
         @change="changeExpenseDates"
@@ -23,7 +23,7 @@
       v-if="hasExpenses"
       class="data-table"
     >
-      <spending-table-item
+      <expenses-table-item
         v-for="expense in expenses"
         :key="expense.id"
         :expense="expense"
@@ -44,14 +44,14 @@
 
 <script>
 import DatePicker from '@/components/DatePicker'
-import SpendingTableItem from './SpendingTableItem'
+import ExpensesTableItem from './ExpensesTableItem'
 
 export default {
-  name: 'SpendingTable',
+  name: 'ExpensesTable',
 
   components: {
     DatePicker,
-    SpendingTableItem
+    ExpensesTableItem
   },
 
   props: {
@@ -105,7 +105,7 @@ export default {
 <style lang="scss">
 @import '@/css/variables';
 
-.spending-table-header {
+.expenses-table-header {
   position: sticky;
   top: 0;
   background: $substrate;
@@ -134,7 +134,7 @@ export default {
   }
 }
 
-.spending-table-datepicker {
+.expenses-table-datepicker {
   width: 250px;
 
   .dp__outer_menu_wrap {

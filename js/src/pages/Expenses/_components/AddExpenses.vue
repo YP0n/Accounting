@@ -48,7 +48,7 @@ import { getFormattedDate } from '@/utils'
 import { DATE_REGEX } from '@/constants'
 
 export default {
-  name: 'AddSpending',
+  name: 'AddExpenses',
 
   components: {
     DatePicker,

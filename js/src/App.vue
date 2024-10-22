@@ -1,14 +1,15 @@
 <template>
-  <spending-page/>
+  <expenses />
 </template>
 
 <script>
-import SpendingPage from './pages/Spending/Spending.vue'
+import Expenses from './pages/Expenses/Expenses.vue'
 
 export default {
   name: 'App',
+
   components: {
-    SpendingPage
+    Expenses
   }
 }
 </script>
