@@ -107,6 +107,9 @@
             <label for="taxPension">ЄСВ</label>
             <input type="number" id="taxPension" th:field="*{expensesBusinessList[__${iterStat.index}__].taxPension}"
                    placeholder="ЄСВ">
+            <label for="taxWar">Військовий збір</label>
+            <input type="number" id="taxWar" th:field="*{expensesBusinessList[__${iterStat.index}__].taxWar}"
+                   placeholder="Військовий збір">
             <label for="owner">Власник</label>
             <input type="number" id="owner" th:field="*{expensesBusinessList[__${iterStat.index}__].owner}"
                    placeholder="Витати на постачання товарів власником">
@@ -117,5 +120,8 @@
     </ul>
     <button type="submit">Зберегти витрати</button>
 </form>
+
+<a th:href="@{/}" class="get-btn" style="margin-top: 20px; display: inline-block;">На головну</a>
+
 </body>
 </html>

@@ -81,6 +81,8 @@
   <br/>
   <a href="/operation_expenses/api/total_sum_tax_pension">Витрати на ЄСВ загальні</a>
   <br/>
+  <a href="operation_expenses/api/total_sum_tax_war">Витрати на військовий збір загальні</a>
+  <br/>
   <a href="/operation_expenses/api/sum_expenses_salary_v_between_date">Витрати на зарплатню для V за вибраний період</a>
   <br/>
   <a href="/operation_expenses/api/sum_expenses_salary_i_between_date">Витрати на зарплатню для I за вибраний період</a>
@@ -92,6 +94,8 @@
   <a href="/operation_expenses/api/sum_expenses_tax_single_between_date">Витрати на Єдиний податок за вибраний період</a>
   <br/>
   <a href="/operation_expenses/api/sum_expenses_tax_pension_between_date">Витрати на ЄСВ за вибраний період</a>
+  <br/>
+  <a href="operation_expenses/api/sum_expenses_tax_war_between_date">Витрати на військовий збір за вибраний період</a>
   <br/>
   <a href="/business_expenses">Редагування бізнес витрат</a>
 </div>
@@ -120,9 +124,18 @@
   <a href="/income_shop">Редагування доходів</a>
 </div>
 
+<!-- Група посилань на доступні кошти -->
+<div class="link-group">
+  <br/>
+  <a href="/operation_expenses/available_sum" class="new-expense-btn">Перевірити доступні кошти</a>
+</div>
+
 <!-- Форма виходу -->
 <form th:action="@{/logout}" th:method="POST">
   <input type="submit" value="Вийти"/>
 </form>
+
+<a th:href="@{/}" class="get-btn" style="margin-top: 20px; display: inline-block;">На головну</a>
+
 </body>
 </html>

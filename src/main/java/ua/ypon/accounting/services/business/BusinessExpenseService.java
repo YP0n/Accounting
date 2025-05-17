@@ -1,8 +1,7 @@
 package ua.ypon.accounting.services.business;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,16 +16,12 @@ import java.util.Optional;
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Slf4j
 public class BusinessExpenseService {
 
     private final BusinessExpensesRepository businessExpensesRepository;
 
-    private static final Logger log = LoggerFactory.getLogger(BusinessExpenseService.class);
-
-    @Autowired
-    public BusinessExpenseService(BusinessExpensesRepository businessExpensesRepository) {
-        this.businessExpensesRepository = businessExpensesRepository;
-    }
     public List<BusinessExpenses> index() {
         return businessExpensesRepository.findAll(Sort.by("dateExpensesBusiness"));
     }
@@ -64,6 +59,7 @@ public class BusinessExpenseService {
             expenses.setRent(businessExpenses.getRent());
             expenses.setTaxSingle(businessExpenses.getTaxSingle());
             expenses.setTaxPension(businessExpenses.getTaxPension());
+            expenses.setTaxWar(businessExpenses.getTaxWar());
             expenses.setOwner(businessExpenses.getOwner());
             expenses.setSuppliers(businessExpenses.getSuppliers());
         }

@@ -1,8 +1,7 @@
 package ua.ypon.accounting.controllers.income;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +22,10 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/income_shop")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequiredArgsConstructor
+@Slf4j
 public class IncomeController {
-
-    private static final Logger log = LoggerFactory.getLogger(IncomeService.class);
-
     private final IncomeService incomeService;
-
-    @Autowired
-    public IncomeController(IncomeService incomeService) {
-        this.incomeService = incomeService;
-    }
-
     @GetMapping("/api/income")
     @ResponseBody
     public List<IncomeShop> getAllIncome() {
@@ -49,14 +41,14 @@ public class IncomeController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> addIncome(@ModelAttribute("income") IncomeShop incomeShop) {
+    public ResponseEntity<Void> addIncome(@ModelAttribute("income") IncomeShop incomeShop) {
         log.info("IncomeShop.addIncome()");
         incomeService.save(incomeShop);
         String redirectUrl = "/income_shop/show";
         log.info("log " + redirectUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(redirectUrl));
-        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
 
     @GetMapping("/show")

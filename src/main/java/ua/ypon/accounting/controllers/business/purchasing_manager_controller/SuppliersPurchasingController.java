@@ -1,4 +1,4 @@
-package ua.ypon.accounting.controllers.business.purchasingManagerController;
+package ua.ypon.accounting.controllers.business.purchasing_manager_controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.ypon.accounting.services.business.purchasingManager.SuppliersPurchasingService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -27,7 +28,7 @@ public class SuppliersPurchasingController {
     @GetMapping("/api/total_sum_purchasing_suppliers")
     public ModelAndView getTotalSumPurchasingSuppliers() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/purchasingExpenses/getSumPurchasingSuppliers");
-        double totalPurchasingSuppliers;
+        BigDecimal totalPurchasingSuppliers;
         totalPurchasingSuppliers = service.sumPurchasingSuppliers();
         modelAndView.addObject("totalPurchasingSuppliers", totalPurchasingSuppliers);
         return modelAndView;
@@ -38,7 +39,7 @@ public class SuppliersPurchasingController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/purchasingExpenses/getSumPurchasingSuppliers");
-        double totalPurchasingSuppliers;
+        BigDecimal totalPurchasingSuppliers;
         if (startDate == null || endDate == null) {
             totalPurchasingSuppliers = service.calculateTotalPurchasingSuppliersForPeriod(LocalDate.now(), LocalDate.now());
         } else {

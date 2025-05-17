@@ -18,30 +18,29 @@ import ua.ypon.accounting.util.PersonValidator;
 public class RegistrationController {
     private RegistrationService service;
     private PersonValidator personValidator;
-
+    
     @GetMapping("/index")
     public String index() {
         return "index";
     }
-
+    
     @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
-
+    
     @GetMapping("/registration")
     public String registrationPage(@ModelAttribute("person") Person person) {
         return "registration";
     }
-
+    
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("person") @Valid Person person,
                                       BindingResult bindingResult) {
         personValidator.validate(person, bindingResult);
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return "/registration";
         service.register(person);
         return "redirect: /login";
     }
-
 }

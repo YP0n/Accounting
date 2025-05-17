@@ -51,6 +51,7 @@
     <p>Оренда<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getRent()}">rent</a></p>
     <p>Єдиний податок<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getTaxSingle()}">taxSingle</a></p>
     <p>ЄСВ<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getTaxPension()}">taxPension</a></p>
+    <p>Військовий збір<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getTaxWar()}">taxWar</a></p>
     <p>Витрати на товар поставлений власником<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getOwner()}">owner</a></p>
     <p>Витрати на товар поставлений постачальниками<a th:href="@{/business_expenses/{id}(id=${businessExpenses.getId()})}" th:text="${businessExpenses.getSuppliers()}">suppliers</a></p>
 </div>
@@ -59,6 +60,7 @@
 <hr/>
 
 <a href="/business_expenses/newBusinessExpense" class="new-expense-btn">Створити нову бізнес витрату</a>
-
+<a href="/business_expenses/available_sum" class="new-expense-btn">Перевірити доступні кошти</a>
+<a th:href="@{/}" class="get-btn" style="margin-top: 20px; display: inline-block;">На головну</a>
 </body>
 </html>

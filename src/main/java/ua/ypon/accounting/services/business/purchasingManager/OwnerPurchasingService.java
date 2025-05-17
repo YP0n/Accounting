@@ -1,43 +1,38 @@
 package ua.ypon.accounting.services.business.purchasingManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.BusinessExpenses;
 import ua.ypon.accounting.repositories.BusinessExpensesRepository;
-import ua.ypon.accounting.services.business.BusinessExpenseService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author ua.ypon 01.03.2024
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Slf4j
 public class OwnerPurchasingService {
-
-    private static final Logger log = LoggerFactory.getLogger(BusinessExpenseService.class);
-
-    private static final double DEFAULT_EXPENSE = 0.0;
+    private static final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
     private final BusinessExpensesRepository businessExpensesRepository;
-
-    @Autowired
-    public OwnerPurchasingService(BusinessExpensesRepository businessExpensesRepository) {
-        this.businessExpensesRepository = businessExpensesRepository;
-    }
-
+    
     /**
      * Обчислює загальну суму поставлених товарів власником.
      *
      * @return сума поставок доставки товару власником
      */
-    public double sumPurchasingOwner() {
+    public BigDecimal sumPurchasingOwner() {
         try {
             return businessExpensesRepository.findAll().stream()
-                    .mapToDouble(BusinessExpenses::getOwner)
-                    .sum();
+                    .map(BusinessExpenses::getOwner)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні загальної суми доставки товару власником: {}", e.getMessage());
             return DEFAULT_EXPENSE;
@@ -49,11 +44,12 @@ public class OwnerPurchasingService {
      *
      * @return сума доставлених товарів власником за період
      */
-    public double calculateTotalPurchasingOwnerForPeriod(LocalDate startDate, LocalDate endDate) {
+    public BigDecimal calculateTotalPurchasingOwnerForPeriod(LocalDate startDate, LocalDate endDate) {
         try {
             return businessExpensesRepository.findAllByDateExpensesBusinessBetween(startDate, endDate)
-                    .stream().mapToDouble(BusinessExpenses::getOwner)
-                    .sum();
+                    .stream().map(BusinessExpenses::getOwner)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні загальної суми доставки товару власником за період: {}", e.getMessage());
             return DEFAULT_EXPENSE;

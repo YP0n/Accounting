@@ -9,7 +9,9 @@ import ua.ypon.accounting.models.BusinessExpenses;
 import ua.ypon.accounting.repositories.BusinessExpensesRepository;
 import ua.ypon.accounting.services.business.BusinessExpenseService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author ua.ypon 01.03.2024
@@ -19,7 +21,7 @@ import java.time.LocalDate;
 public class CarExpensesService {
 
     private static final Logger log = LoggerFactory.getLogger(BusinessExpenseService.class);
-    private static final double DEFAULT_EXPENSE = 0.0;
+    private static final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
     private final BusinessExpensesRepository businessExpensesRepository;
 
     @Autowired
@@ -32,12 +34,13 @@ public class CarExpensesService {
      *
      * @return сума витрат на пальне
      */
-    public double sumExpensesFuel() {
+    public BigDecimal sumExpensesFuel() {
         try {
             return businessExpensesRepository.findAll()
                     .stream()
-                    .mapToDouble(BusinessExpenses::getFuel)
-                    .sum();
+                    .map(BusinessExpenses::getFuel)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні витрат на паливо: {}", e.getMessage());
             return DEFAULT_EXPENSE;
@@ -48,12 +51,13 @@ public class CarExpensesService {
      *
      * @return сума витрат на пальне за вибраний період
      */
-    public double calculateTotalFuelExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
+    public BigDecimal calculateTotalFuelExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
         try {
-            return businessExpensesRepository.findAllByDateExpensesBusinessBetweenWithLazyLoading(startDate, endDate)
+            return businessExpensesRepository.findAllByDateExpensesBusinessBetween(startDate, endDate)
                     .stream()
-                    .mapToDouble(BusinessExpenses::getFuel)
-                    .sum();
+                    .map(BusinessExpenses::getFuel)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні загальних витрат на пальне за період: {}", e.getMessage());
             return DEFAULT_EXPENSE;
@@ -66,12 +70,13 @@ public class CarExpensesService {
      *
      * @return сума витрат на обслуговування авто
      */
-    public double sumExpensesMaintenance() {
+    public BigDecimal sumExpensesMaintenance() {
         try {
             return businessExpensesRepository.findAll()
                     .stream()
-                    .mapToDouble(BusinessExpenses::getMaintenance)
-                    .sum();
+                    .map(BusinessExpenses::getMaintenance)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні витрат на обслуговування: {}", e.getMessage());
             return DEFAULT_EXPENSE;
@@ -83,12 +88,13 @@ public class CarExpensesService {
      *
      * @return сума витрат на обслуговування авто за вибраний період
      */
-    public double calculateTotalMaintenanceExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
+    public BigDecimal calculateTotalMaintenanceExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
         try {
-            return businessExpensesRepository.findAllByDateExpensesBusinessBetweenWithLazyLoading(startDate, endDate)
+            return businessExpensesRepository.findAllByDateExpensesBusinessBetween(startDate, endDate)
                     .stream()
-                    .mapToDouble(BusinessExpenses::getMaintenance)
-                    .sum();
+                    .map(BusinessExpenses::getMaintenance)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні загальних витрат на пальне за період: {}", e.getMessage());
             return DEFAULT_EXPENSE;

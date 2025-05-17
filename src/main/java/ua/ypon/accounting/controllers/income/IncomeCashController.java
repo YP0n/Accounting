@@ -1,6 +1,6 @@
 package ua.ypon.accounting.controllers.income;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.ypon.accounting.services.income.IncomeCashService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -17,19 +18,15 @@ import java.time.LocalDate;
 @Controller
 @RequestMapping("/cash_income")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequiredArgsConstructor
 public class IncomeCashController {
 
     private final IncomeCashService service;
-
-    @Autowired
-    public IncomeCashController(IncomeCashService service) {
-        this.service = service;
-    }
-
+    
     @GetMapping("/api/total_sum_cash")
     public ModelAndView getTotalSumIncomeCash() {
         ModelAndView modelAndView = new ModelAndView("income/cash/getSumIncomeCash");
-        double totalIncomeCash;
+        BigDecimal totalIncomeCash;
         totalIncomeCash = service.sumIncomeCash();
         modelAndView.addObject("totalIncomeCash", totalIncomeCash);
         return modelAndView;
@@ -40,7 +37,7 @@ public class IncomeCashController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("income/cash/getSumIncomeCash");
-        double totalIncomeCash;
+        BigDecimal totalIncomeCash;
         if(startDate == null || endDate == null) {
             totalIncomeCash = service.calculateTotalIncomeCashForPeriod(LocalDate.now(), LocalDate.now());
         } else {

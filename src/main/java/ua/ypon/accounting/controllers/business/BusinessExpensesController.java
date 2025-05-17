@@ -1,8 +1,7 @@
 package ua.ypon.accounting.controllers.business;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +22,12 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/business_expenses")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequiredArgsConstructor
+@Slf4j
 public class BusinessExpensesController {
-
-    private static final Logger log = LoggerFactory.getLogger(BusinessExpenseService.class);
-
+    
     private final BusinessExpenseService service;
-
-    @Autowired
-    public BusinessExpensesController(BusinessExpenseService service) {
-        this.service = service;
-    }
-
+    private static final String BUSINESS_EXPENSES_ATTRIBUTE = "businessExpenses";
     @GetMapping("/api/business_expenses")
     @ResponseBody
     public List<BusinessExpenses> getAllExpenses() {
@@ -43,21 +37,21 @@ public class BusinessExpensesController {
 
     @GetMapping("/newBusinessExpense")
     public String createNewExpenses(Model model) {
-        model.addAttribute("businessExpenses", new BusinessExpenses());
+        model.addAttribute(BUSINESS_EXPENSES_ATTRIBUTE, new BusinessExpenses());
         log.info("BusinessExpenses.createNewExpenses()");
         return "businessExpenses/businessExpensesPOST";
     }
 
     @PostMapping()
     @ResponseBody
-    public ResponseEntity<?> addBusinessExpense(@ModelAttribute("businessExpenses") BusinessExpenses businessExpenses) {
+    public ResponseEntity<Void> addBusinessExpense(@ModelAttribute(BUSINESS_EXPENSES_ATTRIBUTE) BusinessExpenses businessExpenses) {
         log.info("BusinessExpenses.addBusinessExpense");
         service.save(businessExpenses);
         String redirectUrl = "/business_expenses/show";
         log.info("log " + redirectUrl);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(redirectUrl));
-        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
 
     @GetMapping("/show")
@@ -70,7 +64,7 @@ public class BusinessExpensesController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("business_expenses", service.index());
+        model.addAttribute(BUSINESS_EXPENSES_ATTRIBUTE, service.index());
         return "businessExpenses/index";
     }
 
@@ -79,7 +73,7 @@ public class BusinessExpensesController {
         Optional<BusinessExpenses> businessExpensesOptional = service.show(id);
         if(businessExpensesOptional.isPresent()) {
             BusinessExpenses businessExpenses = businessExpensesOptional.get();
-            model.addAttribute("businessExpenses", businessExpenses);
+            model.addAttribute(BUSINESS_EXPENSES_ATTRIBUTE, businessExpenses);
             return "businessExpenses/show";
         } else {
             return "personalExpenses/error/404";
@@ -91,13 +85,13 @@ public class BusinessExpensesController {
         Optional<BusinessExpenses> businessExpensesOptional = service.show(id);
         if (businessExpensesOptional.isPresent()) {
             BusinessExpenses businessExpenses = businessExpensesOptional.get();
-            model.addAttribute("businessExpenses", businessExpenses);
+            model.addAttribute(BUSINESS_EXPENSES_ATTRIBUTE, businessExpenses);
         }
         return "businessExpenses/edit";
     }
 
     @PatchMapping("/{id}")
-    public String updateExpense(@ModelAttribute("businessExpenses") BusinessExpenses businessExpenses, @PathVariable("id") long id) {
+    public String updateExpense(@ModelAttribute(BUSINESS_EXPENSES_ATTRIBUTE) BusinessExpenses businessExpenses, @PathVariable("id") long id) {
         service.update(id, businessExpenses);
         return "redirect:/business_expenses/show";
     }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import ua.ypon.accounting.models.BatchForm;
 import ua.ypon.accounting.models.IncomeShop;
 import ua.ypon.accounting.services.income.IncomeService;
@@ -26,30 +27,30 @@ import java.util.List;
 @SessionAttributes("batchForm")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
 public class BatchUpdateIncomeController {
-
+    
     private final IncomeService service;
-
+    
     @Autowired
     public BatchUpdateIncomeController(IncomeService service) {
         this.service = service;
     }
-
+    
     @GetMapping("/new_batch")
     public String showBatchForm(Model model) {
-        if(!model.containsAttribute("batchForm")) {
+        if (!model.containsAttribute("batchForm")) {
             model.addAttribute("batchForm", new BatchForm());
         }
         return "income/incomePOSTBatch";
     }
-
-    @PostMapping ("/process_batch")
+    
+    @PostMapping("/process_batch")
     public String processBatch(@Validated @ModelAttribute("batchForm") BatchForm batchForm, Model model) {
         LocalDate startDate = batchForm.getStartDate();
         LocalDate endDate = batchForm.getEndDate();
-
+        
         List<LocalDate> dateIsRange = new ArrayList<>();
         List<IncomeShop> incomeShopList = new ArrayList<>();
-
+        
         while (!startDate.isAfter(endDate)) {
             IncomeShop incomeShop = new IncomeShop();
             incomeShop.setDateIncome(startDate);
@@ -59,19 +60,23 @@ public class BatchUpdateIncomeController {
         }
         batchForm.setIncomeShopList(incomeShopList);
         model.addAttribute("dates", dateIsRange);
-
+        
         return "income/incomePOSTBatch";
     }
-
+    
     @PostMapping("add_income")
-    public ResponseEntity<?> addIncome(@Validated @ModelAttribute("batchForm") BatchForm batchForm) {
+    public ResponseEntity<String> addIncome(@Validated @ModelAttribute("batchForm") BatchForm batchForm,
+                                            SessionStatus status) {
         try {
             List<IncomeShop> incomeShopList = batchForm.getIncomeShopList();
             service.saveIncome(incomeShopList);
+            
+            status.setComplete();
+            
             String redirectUrl = "/income_shop/show";
             HttpHeaders headers = new HttpHeaders();
             headers.setLocation(URI.create(redirectUrl));
-            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+            return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save income: " + e.getMessage());
         }

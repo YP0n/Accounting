@@ -1,8 +1,7 @@
 package ua.ypon.accounting.controllers.personal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,41 +22,37 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/personal_expenses")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequiredArgsConstructor
+@Slf4j
 public class PersonalExpensesController {
-
-    private static final Logger log = LoggerFactory.getLogger(PersonalExpenses.class);
-
+    public static final String PERSONAL_EXPENSES_ATTRIBUTE = "personalExpenses";
     private final PersonalExpenseService service;
-
-    @Autowired
-    public PersonalExpensesController(PersonalExpenseService service) {
-        this.service = service;
-    }
-
+    
     @GetMapping("/api/expenses")
     @ResponseBody
     public List<PersonalExpenses> getAllExpenses() {
         log.info("PersonalExpenses.getAllExpenses()");
         return service.index();
     }
-
+    
     @GetMapping("/new")
     public String createNewExpenses(Model model) {
-        model.addAttribute("personalExpenses", new PersonalExpenses());
+        model.addAttribute(PERSONAL_EXPENSES_ATTRIBUTE, new PersonalExpenses());
         log.info("PersonalExpenses.createNewExpenses()");
         return "personalExpenses/personalExpensesPOST";
     }
+    
     @PostMapping()
     @ResponseBody
-    public ResponseEntity<?> addExpense(@ModelAttribute("personalExpenses") PersonalExpenses personalExpenses) {
+    public ResponseEntity<Void> addExpense(@ModelAttribute(PERSONAL_EXPENSES_ATTRIBUTE) PersonalExpenses personalExpenses) {
         log.info("PersonalExpenses.addExpense()");
         service.save(personalExpenses);
         String redirectUrl = "/personal_expenses/show";
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(redirectUrl));
-        return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
-
+    
     @GetMapping("/show")
     public String showExpensesPage(Model model) {
         List<PersonalExpenses> expenses = service.index();
@@ -65,46 +60,45 @@ public class PersonalExpensesController {
         log.info("Кількість витрат: {}", expenses.size());
         return "personalExpenses/viewExpenses";
     }
-
+    
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("personal_expenses", service.index());
+        model.addAttribute(PERSONAL_EXPENSES_ATTRIBUTE, service.index());
         return "personalExpenses/index";
     }
-
+    
     @GetMapping("/{id}")
     public String show(@PathVariable("id") long id, Model model) {
         Optional<PersonalExpenses> personalExpensesOptional = service.show(id);
-        if(personalExpensesOptional.isPresent()) {
+        if (personalExpensesOptional.isPresent()) {
             PersonalExpenses personalExpenses = personalExpensesOptional.get();
-            model.addAttribute("personalExpenses", personalExpenses);
+            model.addAttribute(PERSONAL_EXPENSES_ATTRIBUTE, personalExpenses);
             return "personalExpenses/show";
         } else {
             return "personalExpenses/error/404";
         }
     }
-
+    
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") long id) {
         Optional<PersonalExpenses> personalExpensesOptional = service.show(id);
-        if(personalExpensesOptional.isPresent()) {
+        if (personalExpensesOptional.isPresent()) {
             PersonalExpenses personalExpenses = personalExpensesOptional.get();
-            model.addAttribute("personalExpenses", personalExpenses);
+            model.addAttribute(PERSONAL_EXPENSES_ATTRIBUTE, personalExpenses);
         }
         return "personalExpenses/edit";
     }
-
+    
     @PatchMapping("/{id}")
-    public String updateExpense(@ModelAttribute("personalExpenses") PersonalExpenses personalExpenses, @PathVariable("id") long id) {
+    public String updateExpense(@ModelAttribute(PERSONAL_EXPENSES_ATTRIBUTE) PersonalExpenses personalExpenses, @PathVariable("id") long id) {
         service.update(id, personalExpenses);
         return "redirect:/personal_expenses/show";
     }
-
+    
     @DeleteMapping("/{id}")
     public String deleteExpense(@PathVariable("id") long id) {
         log.info("Запит на видалення {}", id);
         service.delete(id);
         return "redirect:/personal_expenses/show";
     }
-
 }

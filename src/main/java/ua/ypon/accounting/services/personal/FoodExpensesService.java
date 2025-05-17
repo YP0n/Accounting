@@ -1,6 +1,6 @@
 package ua.ypon.accounting.services.personal;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.PersonalExpenses;
@@ -14,15 +14,9 @@ import java.util.List;
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class FoodExpensesService {
-
     private final PersonalExpensesRepository personalExpensesRepository;
-
-    @Autowired
-    public FoodExpensesService(PersonalExpensesRepository personalExpensesRepository) {
-        this.personalExpensesRepository = personalExpensesRepository;
-    }
-
     public double sumExpenseFood() {
         // Отримати всі витрати на їжу
         List<PersonalExpenses> expensesList = personalExpensesRepository.findAll();

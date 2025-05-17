@@ -86,6 +86,9 @@
     <label for="taxPension">ЄСВ:</label>
     <input type="text" id="taxPension" th:field="*{taxPension}" required>
     <br/>
+    <label for="taxPension">Військовий збір:</label>
+    <input type="text" id="taxWar" th:field="*{taxWar}" required>
+    <br/>
     <label for="owner">Доставка товарів господарем:</label>
     <input type="text" id="owner" th:field="*{owner}" required>
     <br/>
@@ -97,6 +100,8 @@
 
     <input type="submit" value="Додати">
 </form>
+
+<a th:href="@{/}" class="get-btn" style="margin-top: 20px; display: inline-block;">На головну</a>
 
 </body>
 </html>

@@ -1,13 +1,16 @@
 package ua.ypon.accounting.controllers.business;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.ypon.accounting.services.business.AvailableSumService;
 import ua.ypon.accounting.services.business.operationExpenses.OperationExpensesService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -15,20 +18,15 @@ import java.time.LocalDate;
  */
 @Controller
 @RequestMapping("/operation_expenses")
+@RequiredArgsConstructor
 public class OperationExpensesController {
-
     private final OperationExpensesService service;
-
-    @Autowired
-    public OperationExpensesController(OperationExpensesService service) {
-        this.service = service;
-    }
-
+    private final AvailableSumService availableSumService;
+    
     @GetMapping("/api/total_sum_salary_v")
     public ModelAndView getTotalSumExpensesSalaryV() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesSalaryV");
-        double totalExpensesSalaryV;
-        totalExpensesSalaryV = service.sumExpensesSalaryV();
+        BigDecimal totalExpensesSalaryV = service.sumExpensesSalaryV();
         modelAndView.addObject("totalExpensesSalaryV", totalExpensesSalaryV);
         return modelAndView;
     }
@@ -36,8 +34,7 @@ public class OperationExpensesController {
     @GetMapping("/api/total_sum_salary_i")
     public ModelAndView getTotalSumExpensesSalaryI() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesSalaryI");
-        double totalExpensesSalaryI;
-        totalExpensesSalaryI = service.sumExpensesSalaryI();
+        BigDecimal totalExpensesSalaryI = service.sumExpensesSalaryI();
         modelAndView.addObject("totalExpensesSalaryI", totalExpensesSalaryI);
         return modelAndView;
     }
@@ -45,8 +42,7 @@ public class OperationExpensesController {
     @GetMapping("/api/total_sum_utility")
     public ModelAndView getTotalSumExpensesUtility() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesUtility");
-        double totalExpensesUtility;
-        totalExpensesUtility = service.sumExpensesUtility();
+        BigDecimal totalExpensesUtility = service.sumExpensesUtility();
         modelAndView.addObject("totalExpensesUtility", totalExpensesUtility);
         return modelAndView;
     }
@@ -54,8 +50,7 @@ public class OperationExpensesController {
     @GetMapping("/api/total_sum_rent")
     public ModelAndView getTotalSumExpensesRent() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesRent");
-        double totalExpensesRent;
-        totalExpensesRent = service.sumExpensesRent();
+        BigDecimal totalExpensesRent = service.sumExpensesRent();
         modelAndView.addObject("totalExpensesRent", totalExpensesRent);
         return modelAndView;
     }
@@ -63,8 +58,7 @@ public class OperationExpensesController {
     @GetMapping("/api/total_sum_tax_single")
     public ModelAndView getTotalSumExpensesTaxSingle() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesTaxSingle");
-        double totalExpensesTaxSingle;
-        totalExpensesTaxSingle = service.sumExpensesTaxSingle();
+        BigDecimal totalExpensesTaxSingle = service.sumExpensesTaxSingle();
         modelAndView.addObject("totalExpensesTaxSingle", totalExpensesTaxSingle);
         return modelAndView;
     }
@@ -72,9 +66,16 @@ public class OperationExpensesController {
     @GetMapping("/api/total_sum_tax_pension")
     public ModelAndView getTotalSumExpensesTaxPension() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesTaxPension");
-        double totalExpensesTaxPension;
-        totalExpensesTaxPension = service.sumExpensesTaxPension();
+        BigDecimal totalExpensesTaxPension = service.sumExpensesTaxPension();
         modelAndView.addObject("totalExpensesTaxPension", totalExpensesTaxPension);
+        return modelAndView;
+    }
+    
+    @GetMapping("/api/total_sum_tax_war")
+    public ModelAndView getTotalSumExpensesTaxWar() {
+        ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesTaxWar");
+        BigDecimal totalExpensesTaxWar = service.sumExpensesTaxWar();
+        modelAndView.addObject("totalExpensesTaxWar", totalExpensesTaxWar);
         return modelAndView;
     }
 
@@ -83,7 +84,7 @@ public class OperationExpensesController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesSalaryV");
-        double totalExpensesSalaryV;
+        BigDecimal totalExpensesSalaryV;
         if (startDate == null || endDate == null) {
             totalExpensesSalaryV = service.calculateTotalSalaryV(LocalDate.now(), LocalDate.now());
         } else {
@@ -99,7 +100,7 @@ public class OperationExpensesController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesSalaryI");
-        double totalExpensesSalaryI;
+        BigDecimal totalExpensesSalaryI;
         if (startDate == null || endDate == null) {
             totalExpensesSalaryI = service.calculateTotalSalaryI(LocalDate.now(), LocalDate.now());
         } else {
@@ -115,7 +116,7 @@ public class OperationExpensesController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesUtility");
-        double totalExpensesUtility;
+        BigDecimal totalExpensesUtility;
         if (startDate == null || endDate == null) {
             totalExpensesUtility = service.calculateTotalUtility(LocalDate.now(), LocalDate.now());
         } else {
@@ -131,7 +132,7 @@ public class OperationExpensesController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesRent");
-        double totalExpensesRent;
+        BigDecimal totalExpensesRent;
         if (startDate == null || endDate == null) {
             totalExpensesRent = service.calculateTotalRent(LocalDate.now(), LocalDate.now());
         } else {
@@ -147,7 +148,7 @@ public class OperationExpensesController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesTaxSingle");
-        double totalExpensesTaxSingle;
+        BigDecimal totalExpensesTaxSingle;
         if (startDate == null || endDate == null) {
             totalExpensesTaxSingle = service.calculateTotalTaxSingle(LocalDate.now(), LocalDate.now());
         } else {
@@ -163,7 +164,7 @@ public class OperationExpensesController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesTaxPension");
-        double totalExpensesTaxPension;
+        BigDecimal totalExpensesTaxPension;
         if (startDate == null || endDate == null) {
             totalExpensesTaxPension = service.calculateTotalTaxPension(LocalDate.now(), LocalDate.now());
         } else {
@@ -173,4 +174,44 @@ public class OperationExpensesController {
 
         return modelAndView;
     }
+    
+    @GetMapping("/api/sum_expenses_tax_war_between_date")
+    public ModelAndView getSumExpensesTaxWarBetweenDate(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate) {
+        ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesTaxWar");
+        BigDecimal totalExpensesTaxWar;
+        if (startDate == null || endDate == null) {
+            totalExpensesTaxWar = service.calculateTotalTaxWar(LocalDate.now(), LocalDate.now());
+        } else {
+            totalExpensesTaxWar = service.calculateTotalTaxWar(startDate, endDate);
+        }
+        modelAndView.addObject("totalExpensesTaxWar", totalExpensesTaxWar);
+    
+        return modelAndView;
+    }
+    
+    @GetMapping("/available_sum")
+    public String getTotalSumAvailable(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate,
+            Model model) {
+        
+        if (startDate == null) {
+            startDate = LocalDate.now().minusDays(8);
+        }
+        
+        if (endDate == null) {
+            endDate = LocalDate.now().minusDays(1);
+        }
+        
+        BigDecimal totalAvailableSum = availableSumService.calculateAvailableSum(startDate, endDate);
+        
+        model.addAttribute("totalAvailableSum", totalAvailableSum);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        
+        return "businessExpenses/purchasingExpenses/getAvailableSumForPurchases";
+    }
+    
 }

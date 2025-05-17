@@ -1,8 +1,7 @@
 package ua.ypon.accounting.services.personal;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.PersonalExpenses;
@@ -16,31 +15,25 @@ import java.util.List;
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Slf4j
 public class OtherExpenseService {
-
+    
     private final PersonalExpensesRepository personalExpensesRepository;
-
-    private static final Logger log = LoggerFactory.getLogger(OtherExpenseService.class);
-
-
-    @Autowired
-    public OtherExpenseService(PersonalExpensesRepository personalExpensesRepository) {
-        this.personalExpensesRepository = personalExpensesRepository;
-    }
-
+    
     public double sumExpenseOther() {
         List<PersonalExpenses> expensesList = personalExpensesRepository.findAll();
         double sum = 0.0;
         if (expensesList.isEmpty()) {
             return 0.0;
         }
-
+        
         for (PersonalExpenses expenses : expensesList) {
             sum += expenses.getOtherExpense();
         }
         return sum;
     }
-
+    
     public double calculateTotalOtherExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
         List<PersonalExpenses> expenses = personalExpensesRepository.findAllByDateExpensePersonalBetween(startDate, endDate);
         double sum = 0.0;
@@ -49,5 +42,4 @@ public class OtherExpenseService {
         }
         return sum;
     }
-
 }
