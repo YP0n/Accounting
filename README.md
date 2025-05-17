@@ -128,7 +128,7 @@
 
 ## Контролери
 
-### Пакет `ua.ypon.accounting.controllers.business.purchasingManagerController`
+### Пакет `ua.ypon.accounting.controllers.business.purchasing_manager_controller`
 
 #### Управління закупівлями від власника
 

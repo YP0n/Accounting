@@ -1,6 +1,6 @@
 package ua.ypon.accounting.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,13 +12,15 @@ import ua.ypon.accounting.security.PersonDetails;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class PersonDetailsServices implements UserDetailsService {
-   @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        
         Optional<Person> person = personRepository.findByUsername(username);
+        
         return person.map(PersonDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("Not found " + username));
     }

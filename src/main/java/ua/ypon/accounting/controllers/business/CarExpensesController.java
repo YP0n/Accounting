@@ -19,19 +19,20 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class CarExpensesController {
     private final CarExpensesService service;
+    private static final String TOTAL_EXPENSES_ATTRIBUTE = "totalExpenses";
     @GetMapping("/api/total_sum_fuel")
     public ModelAndView getTotalSumExpensesFuel() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/carExpenses/getSumExpensesFuel");
         BigDecimal totalExpenses;
         totalExpenses = service.sumExpensesFuel();
-        modelAndView.addObject("totalExpenses", totalExpenses);
+        modelAndView.addObject(TOTAL_EXPENSES_ATTRIBUTE, totalExpenses);
         return modelAndView;
     }
     @GetMapping("/api/total_sum_maintenance")
     public ModelAndView getTotalSumExpensesMaintenance() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/carExpenses/getSumExpensesMaintenance");
         BigDecimal totalExpenses = service.sumExpensesMaintenance();
-        modelAndView.addObject("totalExpenses", totalExpenses);
+        modelAndView.addObject(TOTAL_EXPENSES_ATTRIBUTE, totalExpenses);
         return modelAndView;
     }
 
@@ -46,7 +47,7 @@ public class CarExpensesController {
         } else {
             totalExpenses = service.calculateTotalFuelExpenseForPeriod(startDate, endDate);
         }
-        modelAndView.addObject("totalExpenses", totalExpenses);
+        modelAndView.addObject(TOTAL_EXPENSES_ATTRIBUTE, totalExpenses);
 
         return modelAndView;
     }
@@ -62,7 +63,7 @@ public class CarExpensesController {
         } else {
             totalExpenses = service.calculateTotalMaintenanceExpenseForPeriod(startDate, endDate);
         }
-        modelAndView.addObject("totalExpenses", totalExpenses);
+        modelAndView.addObject(TOTAL_EXPENSES_ATTRIBUTE, totalExpenses);
 
         return modelAndView;
     }

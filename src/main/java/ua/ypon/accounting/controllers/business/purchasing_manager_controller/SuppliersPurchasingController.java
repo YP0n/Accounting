@@ -1,4 +1,4 @@
-package ua.ypon.accounting.controllers.business.purchasingManagerController;
+package ua.ypon.accounting.controllers.business.purchasing_manager_controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
