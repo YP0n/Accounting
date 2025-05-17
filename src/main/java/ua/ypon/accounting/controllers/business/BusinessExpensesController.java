@@ -10,12 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ua.ypon.accounting.models.BusinessExpenses;
-import ua.ypon.accounting.services.business.AvailableSumService;
 import ua.ypon.accounting.services.business.BusinessExpenseService;
 
-import java.math.BigDecimal;
 import java.net.URI;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +27,6 @@ import java.util.Optional;
 public class BusinessExpensesController {
     
     private final BusinessExpenseService service;
-    private final AvailableSumService availableSumService;
     @GetMapping("/api/business_expenses")
     @ResponseBody
     public List<BusinessExpenses> getAllExpenses() {
@@ -105,26 +101,4 @@ public class BusinessExpensesController {
         service.delete(id);
         return "redirect:/business_expenses/show";
     }
-    
-    @GetMapping("/available_sum")
-    public String getTotalSumAvailable(
-            @RequestParam(required = false) LocalDate startDate,
-            @RequestParam(required = false) LocalDate endDate,
-            Model model) {
-    
-        if (startDate == null) {
-            startDate = LocalDate.now().minusDays(8);
-        }
-    
-        if (endDate == null) {
-            endDate = LocalDate.now().minusDays(1);
-        }
-    
-        BigDecimal totalAvailableSum = availableSumService.calculateAvailableSum(startDate, endDate);
-    
-        model.addAttribute("totalAvailableSum", totalAvailableSum);
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
-    
-        return "businessExpenses/purchasingExpenses/getAvailableSumForPurchases";    }
 }

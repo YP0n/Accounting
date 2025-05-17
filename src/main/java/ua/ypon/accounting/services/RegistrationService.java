@@ -18,7 +18,12 @@ public class RegistrationService {
     public void register(Person person) {
         person.setUsername(person.getUsername());
         person.setPassword(passwordEncoder.encode(person.getPassword()));
-        person.setRole("ROLE_USER");
+        
+        if(personRepository.count() == 0) {
+            person.setRole("ROLE_ADMIN");
+        } else {
+            person.setRole("ROLE_USER");
+        }
         personRepository.save(person);
     }
 

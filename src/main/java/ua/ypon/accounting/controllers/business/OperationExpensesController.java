@@ -1,11 +1,13 @@
 package ua.ypon.accounting.controllers.business;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import ua.ypon.accounting.services.business.AvailableSumService;
 import ua.ypon.accounting.services.business.operationExpenses.OperationExpensesService;
 
 import java.math.BigDecimal;
@@ -16,15 +18,11 @@ import java.time.LocalDate;
  */
 @Controller
 @RequestMapping("/operation_expenses")
+@RequiredArgsConstructor
 public class OperationExpensesController {
-
     private final OperationExpensesService service;
-
-    @Autowired
-    public OperationExpensesController(OperationExpensesService service) {
-        this.service = service;
-    }
-
+    private final AvailableSumService availableSumService;
+    
     @GetMapping("/api/total_sum_salary_v")
     public ModelAndView getTotalSumExpensesSalaryV() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/operationExpenses/getSumExpensesSalaryV");
@@ -192,4 +190,28 @@ public class OperationExpensesController {
     
         return modelAndView;
     }
+    
+    @GetMapping("/available_sum")
+    public String getTotalSumAvailable(
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate,
+            Model model) {
+        
+        if (startDate == null) {
+            startDate = LocalDate.now().minusDays(8);
+        }
+        
+        if (endDate == null) {
+            endDate = LocalDate.now().minusDays(1);
+        }
+        
+        BigDecimal totalAvailableSum = availableSumService.calculateAvailableSum(startDate, endDate);
+        
+        model.addAttribute("totalAvailableSum", totalAvailableSum);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        
+        return "businessExpenses/purchasingExpenses/getAvailableSumForPurchases";
+    }
+    
 }
