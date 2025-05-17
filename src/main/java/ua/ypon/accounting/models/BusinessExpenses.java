@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -22,34 +23,37 @@ public class BusinessExpenses {
     private Long id;
 
     @Column(name = "fuel")
-    private double fuel;
+    private BigDecimal fuel;
 
     @Column(name = "maintenance")
-    private double maintenance;
+    private BigDecimal maintenance;
 
     @Column(name = "salary_v")
-    private double salaryValya;
+    private BigDecimal salaryValya;
 
     @Column(name = "salary_i")
-    private double salaryIra;
+    private BigDecimal salaryIra;
 
     @Column(name = "utility_and_water")
-    private double utilityAndWater;
+    private BigDecimal utilityAndWater;
 
     @Column(name = "rent")
-    private double rent;
+    private BigDecimal rent;
 
     @Column(name = "tax_single")
-    private double taxSingle;
+    private BigDecimal taxSingle;
 
     @Column(name = "tax_pension")
-    private double taxPension;
+    private BigDecimal taxPension;
+    
+    @Column(name = "tax_war")
+    private BigDecimal taxWar;
 
     @Column(name = "owner")
-    private double owner;
+    private BigDecimal owner;
 
     @Column(name = "suppliers")
-    private double suppliers;
+    private BigDecimal suppliers;
 
     @Column(name = "date_expense_business")
     private LocalDate dateExpensesBusiness;

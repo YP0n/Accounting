@@ -9,7 +9,9 @@ import ua.ypon.accounting.models.BusinessExpenses;
 import ua.ypon.accounting.repositories.BusinessExpensesRepository;
 import ua.ypon.accounting.services.business.BusinessExpenseService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author ua.ypon 01.03.2024
@@ -20,7 +22,7 @@ public class SuppliersPurchasingService {
 
     private static final Logger log = LoggerFactory.getLogger(BusinessExpenseService.class);
 
-    private static final double DEFAULT_EXPENSE = 0.0;
+    private static final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
 
     private final BusinessExpensesRepository businessExpensesRepository;
 
@@ -34,11 +36,12 @@ public class SuppliersPurchasingService {
      *
      * @return сума поставок доставки товару постачальниками
      */
-    public double sumPurchasingSuppliers() {
+    public BigDecimal sumPurchasingSuppliers() {
         try {
             return businessExpensesRepository.findAll().stream()
-                    .mapToDouble(BusinessExpenses::getSuppliers)
-                    .sum();
+                    .map(BusinessExpenses::getSuppliers)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні загальної суми доставки товару постачальниками: {}", e.getMessage());
             return DEFAULT_EXPENSE;
@@ -50,11 +53,12 @@ public class SuppliersPurchasingService {
      *
      * @return сума доставлених товарів постачальниками за період
      */
-    public double calculateTotalPurchasingSuppliersForPeriod(LocalDate startDate, LocalDate endDate) {
+    public BigDecimal calculateTotalPurchasingSuppliersForPeriod(LocalDate startDate, LocalDate endDate) {
         try {
             return businessExpensesRepository.findAllByDateExpensesBusinessBetween(startDate, endDate)
-                    .stream().mapToDouble(BusinessExpenses::getSuppliers)
-                    .sum();
+                    .stream().map(BusinessExpenses::getSuppliers)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             log.error("Помилка при обчисленні загальної суми доставки товару постачальниками за період: {}", e.getMessage());
             return DEFAULT_EXPENSE;

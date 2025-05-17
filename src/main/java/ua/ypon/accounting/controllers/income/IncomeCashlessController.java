@@ -1,6 +1,6 @@
 package ua.ypon.accounting.controllers.income;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.ypon.accounting.services.income.IncomeCashlessService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -17,19 +18,14 @@ import java.time.LocalDate;
 @Controller
 @RequestMapping("/cashless_income")
 @PreAuthorize("hasRole('ROLE_ADMIN')")
+@RequiredArgsConstructor
 public class IncomeCashlessController {
 
     private final IncomeCashlessService service;
-
-    @Autowired
-    public IncomeCashlessController(IncomeCashlessService service) {
-        this.service = service;
-    }
-
     @GetMapping("/api/total_sum_cashless")
     public ModelAndView getTotalSumIncomeCashless() {
         ModelAndView modelAndView = new ModelAndView("income/cashless/getSumIncomeCashless");
-        double totalIncomeCashless;
+        BigDecimal totalIncomeCashless;
         totalIncomeCashless = service.sumIncomeCashless();
         modelAndView.addObject("totalIncomeCashless", totalIncomeCashless);
         return modelAndView;
@@ -40,7 +36,7 @@ public class IncomeCashlessController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("income/cashless/getSumIncomeCashless");
-        double totalIncomeCashless;
+        BigDecimal totalIncomeCashless;
         if(startDate == null || endDate == null) {
             totalIncomeCashless = service.calculateTotalIncomeCashlessForPeriod(LocalDate.now(), LocalDate.now());
         } else {

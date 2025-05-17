@@ -2,9 +2,11 @@ package ua.ypon.accounting.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -14,7 +16,8 @@ import java.time.LocalDate;
 @Table(name = "Income_shop")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class IncomeShop {
     @Id
     @Column(name = "id")
@@ -22,13 +25,13 @@ public class IncomeShop {
     private Long id;
 
     @Column(name = "income_cash")
-    private double incomeCash;
+    private BigDecimal incomeCash;
 
     @Column(name = "income_cashless")
-    private double incomeCashless;
+    private BigDecimal incomeCashless;
 
     @Column(name = "income_other")
-    private double incomeOther;
+    private BigDecimal incomeOther;
 
     @Column(name = "date_income")
     private LocalDate dateIncome;

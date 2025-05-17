@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.IncomeShop;
 import ua.ypon.accounting.repositories.IncomesRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * @author ua.ypon 04.03.2024
@@ -22,26 +24,28 @@ public class IncomeCashlessService {
         this.incomesRepository = incomesRepository;
     }
 
-    private final double DEFAULT_EXPENSE = 0.0;
+    private final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
 
-    public double sumIncomeCashless() {
+    public BigDecimal sumIncomeCashless() {
         try {
             return incomesRepository.findAll()
                     .stream()
-                    .mapToDouble(IncomeShop::getIncomeCashless)
-                    .sum();
+                    .map(IncomeShop::getIncomeCashless)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             return DEFAULT_EXPENSE;
         }
     }
 
 
-    public double calculateTotalIncomeCashlessForPeriod(LocalDate startDate, LocalDate endDate) {
+    public BigDecimal calculateTotalIncomeCashlessForPeriod(LocalDate startDate, LocalDate endDate) {
         try {
             return incomesRepository.findAllByDateIncomeBetween(startDate, endDate)
                     .stream()
-                    .mapToDouble(IncomeShop::getIncomeCashless)
-                    .sum();
+                    .map(IncomeShop::getIncomeCashless)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
         } catch (Exception e) {
             return DEFAULT_EXPENSE;
         }

@@ -1,6 +1,6 @@
 package ua.ypon.accounting.controllers.business.purchasingManagerController;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.ypon.accounting.services.business.purchasingManager.OwnerPurchasingService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -15,19 +16,15 @@ import java.time.LocalDate;
  */
 @Controller
 @RequestMapping("/owner_purchasing")
+@RequiredArgsConstructor
 public class OwnerPurchasingController {
 
     private final OwnerPurchasingService service;
-
-    @Autowired
-    public OwnerPurchasingController(OwnerPurchasingService service) {
-        this.service = service;
-    }
-
+    
     @GetMapping("/api/total_sum_purchasing_owner")
     public ModelAndView getTotalSumPurchasingOwner() {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/purchasingExpenses/getSumPurchasingOwner");
-        double totalPurchasingOwner;
+        BigDecimal totalPurchasingOwner;
         totalPurchasingOwner = service.sumPurchasingOwner();
         modelAndView.addObject("totalPurchasingOwner", totalPurchasingOwner);
         return modelAndView;
@@ -38,7 +35,7 @@ public class OwnerPurchasingController {
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
         ModelAndView modelAndView = new ModelAndView("businessExpenses/purchasingExpenses/getSumPurchasingOwner");
-        double totalPurchasingOwner;
+        BigDecimal totalPurchasingOwner;
         if (startDate == null || endDate == null) {
             totalPurchasingOwner = service.calculateTotalPurchasingOwnerForPeriod(LocalDate.now(), LocalDate.now());
         } else {
