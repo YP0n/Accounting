@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.ypon.accounting.services.personal.FoodExpensesService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -25,10 +26,12 @@ public class FoodExpensesController {
     
     @GetMapping("/api/sum_food_expenses")
     public ModelAndView getSumFoodExpenses() {
+        
         ModelAndView modelAndView = new ModelAndView("personalExpenses/food/getSumExpensesFood");
-        double totalExpenses;
-        totalExpenses = foodExpensesService.sumExpenseFood();
+        
+        BigDecimal totalExpenses = foodExpensesService.sumExpenseFood();
         modelAndView.addObject("totalExpenses", totalExpenses);
+        
         return modelAndView;
     }
     
@@ -36,8 +39,11 @@ public class FoodExpensesController {
     public ModelAndView getSumExpensesFoodBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
+        
         ModelAndView modelAndView = new ModelAndView("personalExpenses/food/getSumExpensesFood");
-        double totalExpenses;
+        
+        BigDecimal totalExpenses;
+        
         if (startDate == null || endDate == null) {
             totalExpenses = foodExpensesService.calculateTotalFoodExpenseForPeriod(LocalDate.now(), LocalDate.now());
         } else {

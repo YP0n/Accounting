@@ -6,8 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.PersonalExpenses;
 import ua.ypon.accounting.repositories.PersonalExpensesRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * @author ua.ypon 23.02.2024
@@ -16,30 +17,32 @@ import java.util.List;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FoodExpensesService {
+    private static final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
     private final PersonalExpensesRepository personalExpensesRepository;
-    public double sumExpenseFood() {
-        // Отримати всі витрати на їжу
-        List<PersonalExpenses> expensesList = personalExpensesRepository.findAll();
-
-        double sum = 0.0;
-        if (expensesList.isEmpty()){
-            return 0.0;
+    
+    public BigDecimal sumExpenseFood() {
+        
+        try {
+            return personalExpensesRepository.findAll()
+                    .stream()
+                    .map(PersonalExpenses::getFoodExpense)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } catch (Exception e) {
+            return DEFAULT_EXPENSE;
         }
-        for (PersonalExpenses expenses : expensesList) {
-            // Підсумувати лише витрати на їжу
-            sum += expenses.getFoodExpense();
-        }
-        return sum;
     }
-
-    public double calculateTotalFoodExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
-        List<PersonalExpenses> expenses = personalExpensesRepository.findAllByDateExpensePersonalBetween(startDate, endDate);
-
-        double sum = 0.0;
-        for(PersonalExpenses expense : expenses) {
-            sum += expense.getFoodExpense();
+    
+    public BigDecimal calculateTotalFoodExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
+        
+        try {
+            return personalExpensesRepository.findAllByDateExpensePersonalBetween(startDate, endDate)
+                    .stream()
+                    .map(PersonalExpenses::getFoodExpense)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } catch (Exception e) {
+            return DEFAULT_EXPENSE;
         }
-        return sum;
     }
-
 }
