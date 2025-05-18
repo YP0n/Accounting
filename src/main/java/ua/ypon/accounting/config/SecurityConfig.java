@@ -28,6 +28,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 LOGIN_URL,
+                                "/hello",
                                 "/registration",
                                 "/error")
                         .permitAll()
