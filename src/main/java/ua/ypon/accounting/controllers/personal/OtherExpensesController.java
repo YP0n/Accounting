@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ua.ypon.accounting.services.personal.OtherExpenseService;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
@@ -25,10 +26,13 @@ public class OtherExpensesController {
     
     @GetMapping("/api/sum-other-expenses")
     public ModelAndView getSumOtherExpenses() {
+        
         ModelAndView modelAndView = new ModelAndView("personalExpenses/other/getSumExpensesOther");
-        double totalExpenses;
+        
+        BigDecimal totalExpenses;
         totalExpenses = otherExpenseService.sumExpenseOther();
         modelAndView.addObject("totalExpenses", totalExpenses);
+        
         return modelAndView;
     }
     
@@ -36,8 +40,10 @@ public class OtherExpensesController {
     public ModelAndView getSumExpensesOtherBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
+        
         ModelAndView modelAndView = new ModelAndView("personalExpenses/other/getSumExpensesOther");
-        double totalExpenses;
+        
+        BigDecimal totalExpenses;
         if (startDate == null || endDate == null) {
             totalExpenses = otherExpenseService.calculateTotalOtherExpenseForPeriod(LocalDate.now(), LocalDate.now());
         } else {

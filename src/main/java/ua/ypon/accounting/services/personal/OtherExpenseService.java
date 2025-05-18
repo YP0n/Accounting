@@ -7,8 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.PersonalExpenses;
 import ua.ypon.accounting.repositories.PersonalExpensesRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * @author ua.ypon 23.02.2024
@@ -18,28 +19,35 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class OtherExpenseService {
-    
     private final PersonalExpensesRepository personalExpensesRepository;
-    
-    public double sumExpenseOther() {
-        List<PersonalExpenses> expensesList = personalExpensesRepository.findAll();
-        double sum = 0.0;
-        if (expensesList.isEmpty()) {
-            return 0.0;
+    private static final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
+    public BigDecimal sumExpenseOther() {
+
+        try {
+            return personalExpensesRepository.findAll()
+                    .stream()
+                    .map(PersonalExpenses::getOtherExpense)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } catch (Exception e) {
+            log.error("Error calculating total other expenses: {}", e.getMessage());
+            
+            return DEFAULT_EXPENSE;
         }
-        
-        for (PersonalExpenses expenses : expensesList) {
-            sum += expenses.getOtherExpense();
-        }
-        return sum;
     }
     
-    public double calculateTotalOtherExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
-        List<PersonalExpenses> expenses = personalExpensesRepository.findAllByDateExpensePersonalBetween(startDate, endDate);
-        double sum = 0.0;
-        for (PersonalExpenses expense : expenses) {
-            sum += expense.getOtherExpense();
+    public BigDecimal calculateTotalOtherExpenseForPeriod(LocalDate startDate, LocalDate endDate) {
+
+        try {
+            return personalExpensesRepository.findAllByDateExpensePersonalBetween(startDate, endDate)
+                    .stream()
+                    .map(PersonalExpenses::getOtherExpense)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+        } catch (Exception e) {
+            log.error("Error calculating total other expenses for period: {}", e.getMessage());
+            
+            return DEFAULT_EXPENSE;
         }
-        return sum;
     }
 }

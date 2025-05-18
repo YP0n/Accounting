@@ -1,6 +1,6 @@
 package ua.ypon.accounting.services.income;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.ypon.accounting.models.IncomeShop;
@@ -15,17 +15,12 @@ import java.util.Objects;
  */
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class IncomeCashlessService {
-
+    
+    private static final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
     private final IncomesRepository incomesRepository;
-
-    @Autowired
-    public IncomeCashlessService(IncomesRepository incomesRepository) {
-        this.incomesRepository = incomesRepository;
-    }
-
-    private final BigDecimal DEFAULT_EXPENSE = BigDecimal.ZERO;
-
+    
     public BigDecimal sumIncomeCashless() {
         try {
             return incomesRepository.findAll()
@@ -37,8 +32,8 @@ public class IncomeCashlessService {
             return DEFAULT_EXPENSE;
         }
     }
-
-
+    
+    
     public BigDecimal calculateTotalIncomeCashlessForPeriod(LocalDate startDate, LocalDate endDate) {
         try {
             return incomesRepository.findAllByDateIncomeBetween(startDate, endDate)

@@ -24,10 +24,13 @@ public class IncomeOtherController {
     private final IncomeOtherService service;
     @GetMapping("/api/total_sum_other")
     public ModelAndView getTotalSumIncomeOther() {
+        
         ModelAndView modelAndView = new ModelAndView("income/other/getSumIncomeOther");
+        
         BigDecimal totalIncomeOther;
         totalIncomeOther = service.sumIncomeOther();
         modelAndView.addObject("totalIncomeOther", totalIncomeOther);
+        
         return modelAndView;
     }
 
@@ -35,8 +38,11 @@ public class IncomeOtherController {
     public ModelAndView getSumIncomeOtherBetweenDate(
             @RequestParam(required = false) LocalDate startDate,
             @RequestParam(required = false) LocalDate endDate) {
+        
         ModelAndView modelAndView = new ModelAndView("income/other/getSumIncomeOther");
+        
         BigDecimal totalIncomeOther;
+        
         if(startDate == null || endDate == null) {
             totalIncomeOther = service.calculateTotalIncomeOtherForPeriod(LocalDate.now(), LocalDate.now());
         } else {
