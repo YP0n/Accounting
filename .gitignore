@@ -30,6 +30,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-# Додано для ігнорування файлу application.properties
-application.properties
