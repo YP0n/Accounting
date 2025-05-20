@@ -5,6 +5,7 @@ volumes:
 
 services:
   postgres:
+    container_name: "accounting_db"
     image: postgres:latest
     restart: always
     environment:
